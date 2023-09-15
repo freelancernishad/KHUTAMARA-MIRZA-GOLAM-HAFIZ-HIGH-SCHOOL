@@ -6117,7 +6117,7 @@ var render = function render() {
   }, [_c("header", {
     staticClass: "container"
   }, [_c("div", {
-    staticClass: "align-items-center d-flex justify-content-between px-3 py-2 text-white",
+    staticClass: "align-items-center bg-info d-flex justify-content-between px-3 py-2",
     staticStyle: {
       background: "#14142B"
     }
@@ -6163,9 +6163,9 @@ var render = function render() {
   }, [_vm._v("KHUTAMARA MIRZA GOLAM HAFIZ HIGH SCHOOL")])]), _vm._v(" "), _c("div", {
     staticClass: "contact-info"
   })]), _vm._v(" "), _c("nav", {
-    staticClass: "navbar navbar-expand-lg navbar-light text-light",
+    staticClass: "bg-info navbar navbar-expand-lg navbar-light py-1 text-light",
     staticStyle: {
-      "background-color": "#141441 !important"
+      "background-color": "var(--main-color)"
     }
   }, [_c("div", {
     staticClass: "container-fluid"
@@ -6252,9 +6252,7 @@ var render = function render() {
       alt: "footer_top_bg"
     }
   })]), _vm._v(" "), _c("div", {
-    staticStyle: {
-      background: "#14142B"
-    }
+    staticClass: "bg-info"
   }, [_c("div", {
     staticClass: "row text-center"
   }, [_c("div", {
@@ -6308,7 +6306,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "sidebarTitle mb-3 defaltColor"
   }, [_c("h4", {
-    staticClass: "text-center"
+    staticClass: "bg-info fs-5 py-1 text-center"
   }, [_vm._v("গুরুত্বপূর্ণ লিংক")])]), _vm._v(" "), _c("ul", {
     staticClass: "list-unstyled importantLInk",
     staticStyle: {
@@ -6356,7 +6354,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "sidebarTitle mb-3 defaltColor"
   }, [_c("h4", {
-    staticClass: "text-center"
+    staticClass: "bg-info fs-5 py-1 text-center"
   }, [_vm._v("অন্যান্য")])]), _vm._v(" "), _c("ul", {
     staticClass: "list-unstyled importantLInk",
     staticStyle: {
@@ -6404,7 +6402,7 @@ var staticRenderFns = [function () {
   }, [_c("div", {
     staticClass: "sidebarTitle mb-3 defaltColor"
   }, [_c("h4", {
-    staticClass: "text-center"
+    staticClass: "bg-info fs-5 py-1 text-center"
   }, [_vm._v("শিক্ষাবোর্ড")])]), _vm._v(" "), _c("ul", {
     staticClass: "list-unstyled importantLInk",
     staticStyle: {
@@ -7352,7 +7350,7 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("div", {
-    staticClass: "d-flex flex-row flex-grow-1 flex-fill justify-content-center py-2 text-white px-1 news",
+    staticClass: "bg-info d-flex flex-fill flex-grow-1 flex-row justify-content-center nav-item-color news px-1 py-2",
     staticStyle: {
       "background-color": "#14142B"
     }
@@ -7364,14 +7362,25 @@ var staticRenderFns = [function () {
       _c = _vm._self._c;
 
   return _c("a", {
-    staticClass: "px-4 py-1 read-more text-white",
+    staticClass: "text-white p-2 px-3",
+    staticStyle: {
+      "box-shadow": "3px 4px 0px 0px #1564ad",
+      background: "linear-gradient(to bottom, #79bbff 5%, #378de5 100%)",
+      "background-color": "#79bbff",
+      "border-radius": "5px",
+      border: "1px solid #337bc4",
+      display: "inline-block",
+      cursor: "pointer",
+      "font-weight": "bold",
+      "text-decoration": "none",
+      "text-shadow": "0px 1px 0px #528ecc"
+    },
     attrs: {
-      href: "#",
-      role: "button"
+      href: "#"
     }
   }, [_c("i", {
     staticClass: "fa-book-open fa-solid me-2"
-  }), _vm._v("আরো পড়ুন")]);
+  }), _vm._v("বিস্তারিত পড়ুন")]);
 }, function () {
   var _vm = this,
       _c = _vm._self._c;
@@ -30456,7 +30465,7 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-primary {\n    background-color: #160089!important;\n}\nul.footerList li a {\n    border-right: 0 dotted #5a5454;\n    color: #0e0e0e;\n    display: block;\n    font-size: 13px;\n    padding: 6px 0;\n}\nul.footerList li a:hover {\n    background: #fff!important;\n    border-radius: 0!important;\n    color: #0e56a1!important;\n    text-decoration: none!important;\n}\n:root {\n  --my-blue-color: #2e3192;\n  --main-color: #14142b;\n}\n.num {\n  /* font-family: \"Noto Sans Bengali\", sans-serif; */\n}\n* {\n  /* font-family: \"Hind Siliguri\", sans-serif; */\n  padding: 0;\n}\nli.nav-item {\n  font-weight: 500;\n}\n\n/*  */\nbody {\n  background: #e0e4cc;\n}\n.news {\n  width: 160px;\n}\n.news-scroll a {\n  text-decoration: none;\n}\n.dot {\n  height: 6px;\n  width: 6px;\n  margin-left: 3px;\n  margin-right: 3px;\n  margin-top: 2px !important;\n  background-color: rgb(207, 23, 23);\n  border-radius: 50%;\n  display: inline-block;\n}\na,\nh2 {\n  text-decoration: none;\n  color: #34495e;\n}\n.limited-tags {\n  max-height: 348px;\n  overflow-y: auto;\n}\n.limited-tags a {\n  display: block;\n}\n.quoates-logo {\n    max-width: 160px;\n    border-style: solid;\n    border-color: #2e3192;\n    border-width: 2px;\n    border-radius: 50px;\n    height: 160px;\n}\n.quoates-name {\n  font-family: \"Hind Siliguri\", Sans-serif;\n  font-weight: 700;\n}\n.quoates-descrip {\n  background: #e8f0fe;\n  font-size: 18px;\n  margin: 20px 20px 20px 0px;\n  font-weight: 500;\n  height: 300px;\n}\n.read-more {\n  background: #180092;\n}\n.read-more:hover {\n  background: #2303c7;\n  color: rgb(230, 224, 224);\n}\n\n/*  */\n/* Style for the modal */\n#myModal {\n  display: none;\n  position: fixed;\n  z-index: 999;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.9);\n}\n\n/* Style for the modal content */\n#myModal .modal-content {\n  margin: auto;\n  display: block;\n  max-width: 800px;\n  max-height: 80%;\n  width: 91%;\n}\n\n/* Style for the image in the modal */\n#myModal .modal-content img {\n  width: 100%;\n  height: auto;\n}\n\n/* Style for the caption in the modal */\n#caption {\n  margin: auto;\n  display: block;\n  width: 80%;\n  max-height: 20%;\n  text-align: center;\n  color: #fff;\n  padding: 10px 0;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n\n/* Style for the close button */\n.close {\n  color: #fff;\n  float: right;\n  font-size: 36px;\n  font-weight: bold;\n  cursor: pointer;\n  margin-right: 20px;\n  margin-top: -41px;\n}\n\n/* Style for the close button on hover */\n.close:hover,\n.close:focus {\n  color: #bbb;\n  text-decoration: none;\n  cursor: pointer;\n}\n.modal-content {\n  -webkit-animation: zoom-in 0.2s ease-out;\n          animation: zoom-in 0.2s ease-out;\n}\n@-webkit-keyframes zoom-in {\nfrom {\n    transform: scale(0.5);\n    opacity: 0;\n}\nto {\n    transform: scale(1);\n    opacity: 1;\n}\n}\n@keyframes zoom-in {\nfrom {\n    transform: scale(0.5);\n    opacity: 0;\n}\nto {\n    transform: scale(1);\n    opacity: 1;\n}\n}\n.modal-content {\n  transition: all 0.2s ease-out;\n}\n.modal.closed .modal-content {\n  transform: scale(0.5);\n  opacity: 0;\n}\n\n/* Teacher styles */\n.teachers-container {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n}\n\n/* Colorize-zoom Container */\n.img-hover-zoom--colorize img {\n  transition: transform 0.5s, filter 1.5s ease-in-out;\n}\n.img-hover-zoom--colorize:hover img {\n  filter: grayscale(0);\n  transform: scale(1.1);\n}\n\n/* Responsive */\n@media screen and (max-width: 570px) {\n.f13 {\n    font-size: 13px;\n}\n.name {\n    font-size: calc(1.275rem + 0.3vw) !important;\n}\n.img-full {\n    width: 100% !important;\n    height: 196px !important;\n}\n.res-quates {\n    width: 100% !important;\n}\n.d-flex-res {\n    flex-direction: column;\n    width: 100%;\n}\n.contact-info {\n    display: none !important;\n}\n.teachers-container {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n}\n.sorting_disabled {\n    font-size: 12px;\n}\n}\nh2.ms-2.mt-2 {\n    font-size: 30px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-primary {\n    background-color: #160089!important;\n}\nul.footerList li a {\n    border-right: 0 dotted #5a5454;\n    color: #0e0e0e;\n    display: block;\n    font-size: 13px;\n    padding: 6px 0;\n}\nul.footerList li a:hover {\n    background: #fff!important;\n    border-radius: 0!important;\n    color: #0e56a1!important;\n    text-decoration: none!important;\n}\n:root {\n  --my-blue-color: #5d7d69;\n  --my-new-color: #2e3192;\n  --main-color: #14142b;\n}\n.nav-item-color {\n  color: #14142b;\n}\n.num {\n  font-family: \"Noto Sans Bengali\", sans-serif;\n}\n* {\n  font-family: \"Hind Siliguri\", sans-serif;\n  padding: 0;\n}\nli.nav-item {\n  font-weight: 500;\n}\n\n/*  */\nbody {\n  background: #dfdfdf;\n}\n.news {\n  width: 160px;\n}\n.news-scroll a {\n  text-decoration: none;\n}\n.dot {\n  height: 6px;\n  width: 6px;\n  margin-left: 3px;\n  margin-right: 3px;\n  margin-top: 2px !important;\n  background-color: rgb(207, 23, 23);\n  border-radius: 50%;\n  display: inline-block;\n}\na,\nh2 {\n  text-decoration: none;\n  color: #34495e;\n}\n.limited-tags {\n  max-height: 348px;\n  overflow-y: auto;\n}\n.limited-tags a {\n  display: block;\n}\n.quoates-logo {\n  max-width: 100px;\n  border-style: solid;\n  border-color: #2e3192;\n  border-width: 5px;\n  border-radius: 50px;\n}\n.quoates-name {\n  font-family: \"Hind Siliguri\", Sans-serif;\n  font-weight: 700;\n}\n.quoates-descrip {\n  background: #e8f0fe;\n  font-size: 18px;\n  margin: 20px 20px 20px 0px;\n  font-weight: 500;\n  height: 300px;\n}\n.read-more {\n  background: #180092;\n}\n.read-more:hover {\n  background: #2303c7;\n  color: rgb(230, 224, 224);\n}\n\n/*  */\n/* Style for the modal */\n#myModal {\n  display: none;\n  position: fixed;\n  z-index: 999;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.9);\n}\n\n/* Style for the modal content */\n#myModal .modal-content {\n  margin: auto;\n  display: block;\n  max-width: 800px;\n  max-height: 80%;\n  width: 91%;\n}\n\n/* Style for the image in the modal */\n#myModal .modal-content img {\n  width: 100%;\n  height: auto;\n}\n\n/* Style for the caption in the modal */\n#caption {\n  margin: auto;\n  display: block;\n  width: 80%;\n  max-height: 20%;\n  text-align: center;\n  color: #fff;\n  padding: 10px 0;\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  right: 0;\n}\n\n/* Style for the close button */\n.close {\n  color: #fff;\n  float: right;\n  font-size: 36px;\n  font-weight: bold;\n  cursor: pointer;\n  margin-right: 20px;\n  margin-top: -41px;\n}\n\n/* Style for the close button on hover */\n.close:hover,\n.close:focus {\n  color: #bbb;\n  text-decoration: none;\n  cursor: pointer;\n}\n.modal-content {\n  -webkit-animation: zoom-in 0.2s ease-out;\n          animation: zoom-in 0.2s ease-out;\n}\n@-webkit-keyframes zoom-in {\nfrom {\n    transform: scale(0.5);\n    opacity: 0;\n}\nto {\n    transform: scale(1);\n    opacity: 1;\n}\n}\n@keyframes zoom-in {\nfrom {\n    transform: scale(0.5);\n    opacity: 0;\n}\nto {\n    transform: scale(1);\n    opacity: 1;\n}\n}\n.modal-content {\n  transition: all 0.2s ease-out;\n}\n.modal.closed .modal-content {\n  transform: scale(0.5);\n  opacity: 0;\n}\n\n/* Teacher styles */\n.teachers-container {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n}\n\n/* Colorize-zoom Container */\n.img-hover-zoom--colorize img {\n  transition: transform 0.5s, filter 1.5s ease-in-out;\n}\n.img-hover-zoom--colorize:hover img {\n  filter: grayscale(0);\n  transform: scale(1.1);\n}\n\n/* Responsive */\n@media screen and (max-width: 570px) {\n.f13 {\n    font-size: 13px;\n}\n.name {\n    font-size: calc(1.275rem + 0.3vw) !important;\n}\n.img-full {\n    width: 100% !important;\n    height: 196px !important;\n}\n.res-quates {\n    width: 100% !important;\n}\n.d-flex-res {\n    flex-direction: column;\n    width: 100%;\n}\n.contact-info {\n    display: none !important;\n}\n.teachers-container {\n    display: grid;\n    grid-template-columns: repeat(1, 1fr);\n}\n.sorting_disabled {\n    font-size: 12px;\n}\n}\nh2.ms-2.mt-2 {\n    font-size: 30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

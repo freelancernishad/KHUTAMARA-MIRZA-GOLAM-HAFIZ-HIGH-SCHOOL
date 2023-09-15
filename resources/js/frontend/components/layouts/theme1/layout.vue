@@ -4,7 +4,7 @@
 
 
     <header class="container">
-        <div class="align-items-center d-flex justify-content-between px-3 py-2 text-white "
+        <div class="align-items-center bg-info d-flex justify-content-between px-3 py-2"
             style="background: #14142B;">
             <p class="mb-0 f13">EIIN : {{ schoolSettings.SCHOLL_CODE }},<span class="contact-info"> MPO CODE : 7903061301 </span></p>
             <div class="f13">
@@ -34,7 +34,8 @@
 
         </div>
         <!-- nav -->
-        <nav class="navbar navbar-expand-lg navbar-light text-light" style=" background-color: #141441 !important;">
+        <nav class="bg-info navbar navbar-expand-lg navbar-light py-1 text-light"
+            style=" background-color: var(--main-color);">
             <div class="container-fluid"><button type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span
@@ -96,7 +97,9 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="imbox">
-                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">গুরুত্বপূর্ণ লিংক</h4></div>
+                        <div class="sidebarTitle mb-3 defaltColor">
+                                    <h4 class="bg-info fs-5 py-1 text-center">গুরুত্বপূর্ণ লিংক</h4>
+                        </div>
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
 
 
@@ -124,7 +127,10 @@
             </div>
             <div class="col-md-4">
                 <div class="imbox">
-                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">অন্যান্য</h4></div>
+                        <div class="sidebarTitle mb-3 defaltColor">
+                            <h4 class="bg-info fs-5 py-1 text-center">অন্যান্য</h4>
+                        </div>
+
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
 
                         <li><a  href="https://bangladesh.gov.bd/index.php" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; জাতীয় তথ্য বাতায়ন</a></li>
@@ -145,7 +151,9 @@
             </div>
             <div class="col-md-4">
                 <div class="imbox">
-                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">শিক্ষাবোর্ড</h4></div>
+                        <div class="sidebarTitle mb-3 defaltColor">
+                                <h4 class="bg-info fs-5 py-1 text-center">শিক্ষাবোর্ড</h4>
+                        </div>
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
                         <li><a  href="https://dhakaeducationboard.gov.bd/" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; ঢাকা শিক্ষাবোর্ড</a></li>
 
@@ -180,7 +188,7 @@
             <img draggable="false" :src="$asseturl+'assets/img/footer_top_bg.png'" alt="footer_top_bg" class="img-fluid w-100">
         </div>
 
-        <div style="background: #14142B">
+        <div class="bg-info">
 
             <div class="row text-center">
 
@@ -211,6 +219,8 @@
         </div>
 
     </footer>
+
+
 
 
 
@@ -296,22 +306,28 @@ ul.footerList li a:hover {
     text-decoration: none!important;
 }
 
-
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500&display=swap");
 
 :root {
-  --my-blue-color: #2e3192;
+  --my-blue-color: #5d7d69;
+  --my-new-color: #2e3192;
   --main-color: #14142b;
 }
 
+.nav-item-color {
+  color: #14142b;
+}
+
+
+
 .num {
-  /* font-family: "Noto Sans Bengali", sans-serif; */
+  font-family: "Noto Sans Bengali", sans-serif;
 }
 
 * {
-  /* font-family: "Hind Siliguri", sans-serif; */
+  font-family: "Hind Siliguri", sans-serif;
   padding: 0;
 }
 
@@ -321,7 +337,7 @@ li.nav-item {
 
 /*  */
 body {
-  background: #e0e4cc;
+  background: #dfdfdf;
 }
 
 .news {
@@ -359,12 +375,11 @@ h2 {
 }
 
 .quoates-logo {
-    max-width: 160px;
-    border-style: solid;
-    border-color: #2e3192;
-    border-width: 2px;
-    border-radius: 50px;
-    height: 160px;
+  max-width: 100px;
+  border-style: solid;
+  border-color: #2e3192;
+  border-width: 5px;
+  border-radius: 50px;
 }
 
 .quoates-name {
@@ -383,6 +398,7 @@ h2 {
 .read-more {
   background: #180092;
 }
+
 .read-more:hover {
   background: #2303c7;
   color: rgb(230, 224, 224);
@@ -521,10 +537,12 @@ h2 {
   .contact-info {
     display: none !important;
   }
+
   .teachers-container {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
   }
+
   .sorting_disabled {
     font-size: 12px;
   }

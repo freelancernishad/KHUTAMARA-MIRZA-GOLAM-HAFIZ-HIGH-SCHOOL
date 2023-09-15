@@ -6134,14 +6134,14 @@ var render = function render() {
       "margin-right": "9px"
     }
   }, [_vm._v(_vm._s(_vm.curenttime))]), _vm._v(" "), _c("span", {}, [_vm._v("Visitors : " + _vm._s(_vm.visitors))])])]), _vm._v(" "), _c("div", {
-    staticClass: "align-items-center d-flex p-3",
+    staticClass: "align-items-center d-flex gap-4 justify-content-center py-3",
     staticStyle: {
-      "grid-gap": "10px"
+      "grid-gap": "1em"
     }
   }, [_c("div", [_c("img", {
     staticClass: "img-fluid",
     staticStyle: {
-      width: "100px"
+      width: "116px"
     },
     attrs: {
       draggable: "false",
@@ -6149,20 +6149,18 @@ var render = function render() {
       alt: ""
     }
   })]), _vm._v(" "), _c("div", [_c("h2", {
-    staticClass: "fw-bold text-left text-dark name",
+    staticClass: "fw-bold text-center name",
     staticStyle: {
       "font-size": "25px",
-      "border-bottom": "1px solid #271054"
+      color: "var(--my-new-color)"
     }
-  }, [_vm._v(_vm._s(_vm.schoolSettings.SCHOLL_NAME))]), _vm._v(" "), _c("p", {
-    staticClass: "text-left fw-bold f13",
+  }, [_vm._v(" " + _vm._s(_vm.schoolSettings.SCHOLL_NAME))]), _vm._v(" "), _c("p", {
+    staticClass: "text-center fw-bold f13 mb-1",
     staticStyle: {
-      color: "var(--my-blue-color)",
-      "font-size": "16px"
+      "font-size": "20px",
+      color: "var(--my-blue-color)"
     }
-  }, [_vm._v("KHUTAMARA MIRZA GOLAM HAFIZ HIGH SCHOOL")])]), _vm._v(" "), _c("div", {
-    staticClass: "contact-info"
-  })]), _vm._v(" "), _c("nav", {
+  }, [_vm._v(" " + _vm._s(_vm.schoolSettings.SCHOLL_ADDRESS) + ", স্থাপিতঃ " + _vm._s(_vm.schoolSettings.SCHOLL_BUILD))])])]), _vm._v(" "), _c("nav", {
     staticClass: "bg-info navbar navbar-expand-lg navbar-light py-1 text-light",
     staticStyle: {
       "background-color": "var(--main-color)"

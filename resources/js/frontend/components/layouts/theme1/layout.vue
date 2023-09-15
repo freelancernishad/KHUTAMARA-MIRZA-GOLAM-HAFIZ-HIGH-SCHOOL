@@ -19,20 +19,24 @@
 
 
         </div>
-        <div class="align-items-center d-flex p-3 " style="grid-gap:10px;">
+
+
+
+        <div class="align-items-center d-flex gap-4 justify-content-center py-3" style="grid-gap: 1em;">
             <div>
-                <img draggable="false" class="img-fluid" :src="$asseturl+schoolSettings.logo" alt="" style="width: 100px;">
+                <img draggable="false" class="img-fluid" :src="$asseturl+schoolSettings.logo"
+                    alt="" style="width: 116px">
             </div>
             <div>
-                <h2 class="fw-bold text-left text-dark name" style="font-size: 25px;    border-bottom: 1px solid #271054;">{{ schoolSettings.SCHOLL_NAME }}</h2>
-                <p class="text-left fw-bold f13" style="color: var(--my-blue-color);font-size: 16px;">KHUTAMARA MIRZA GOLAM HAFIZ HIGH SCHOOL</p>
-            </div>
-            <div class="contact-info">
-                <!-- <p class="fw-bold mb-0 text-danger">মোবাইলঃ০১৭১৯৪২১৬০৯</p>
-                <p class="fw-bold mb-0 text-danger"> Email: tepablhs65@gmail.com</p> -->
+                <h2 class="fw-bold text-center  name" style="font-size: 25px;color: var(--my-new-color);"> {{ schoolSettings.SCHOLL_NAME }}</h2>
+                <p class="text-center fw-bold f13 mb-1" style="font-size: 20px;color: var(--my-blue-color);"> {{ schoolSettings.SCHOLL_ADDRESS }}, স্থাপিতঃ {{ schoolSettings.SCHOLL_BUILD }}</p>
             </div>
 
+
         </div>
+
+
+
         <!-- nav -->
         <nav class="bg-info navbar navbar-expand-lg navbar-light py-1 text-light"
             style=" background-color: var(--main-color);">

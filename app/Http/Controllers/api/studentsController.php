@@ -1498,7 +1498,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
             <p style='text-align:right;font-size:16px'>শিক্ষার্থীর কপি</p>
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
-            <p class='defalttext'>$address</p>
+            <p class='defalttext'>$address</p>";
 
 
             if($status=='Paid'){
@@ -2087,7 +2087,7 @@ return $html;
                     <td>
                         <p class='fontsize2'>$schoolDetails->SCHOLL_NAME</p>
                         <p class='fontsize1'>$schoolDetails->SCHOLL_ADDRESS </p>
-                       
+
                     </td>
                     <td style='text-align: right'>
                     <div class='imgdiv'>

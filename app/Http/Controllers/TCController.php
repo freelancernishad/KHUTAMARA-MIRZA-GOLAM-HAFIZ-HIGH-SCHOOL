@@ -82,8 +82,14 @@ class TCController extends Controller
                 $random = Str::random(40);
                 $tcData['token'] = $random;
                 // $tcData['academic_year'] = '2021-2022';
-                $tcData['status'] = 'Pending';
-                $tcData['paymentStatus'] = 'Unpaid';
+
+                $tcData['status'] = 'active';
+                $tcData['paymentStatus'] = 'Paid';
+
+                // $tcData['status'] = 'Pending';
+                // $tcData['paymentStatus'] = 'Unpaid';
+
+
                 $tcData['sl'] = $this->tcSL();
 
 
@@ -92,6 +98,7 @@ class TCController extends Controller
 
 
 
+            return url("/student/tc/$tc->token");
 
 
 
@@ -109,6 +116,8 @@ class TCController extends Controller
                 'StudentAddress'=>$request->StudentAddress,
             ];
             $student->update($studentUpdateData);
+
+
 
 
 
@@ -165,7 +174,9 @@ class TCController extends Controller
         ];
         $Insertdata['month'] =  date('F');
         payment::create($Insertdata);
+
         return $redirectutl;
+
         return redirect($redirectutl);
 
     }
@@ -343,7 +354,7 @@ class TCController extends Controller
         <p class='fontsize2'>$school_details->SCHOLL_NAME</p>
         <p class='fontsize1'>ডাকঘর- টেপ্রীগঞ্জ, উপজেলা- দেবীগঞ্জ, জেলা- পঞ্চগড়</p>
         <p class='fontsize1'>স্থাপিতঃ ১৯৬৫ইং , <span style='font-size:14px'> MPO Code 7903061301</span> ,  <span style='font-size:14px'> EIIN No 125983</span> </p>
-    
+
     </td>
     <td style='text-align: right'>
     <div class='imgdiv'>

@@ -397,7 +397,7 @@ class TCController extends Controller
         </div>
         <div style='margin-top: 15px;'>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; আমার জানামতে সে উন্নত চরিত্রের অধিকারী এবং অত্র প্রতিষ্ঠানে অধ্যয়নকালে রাষ্ট্র বা শৃঙ্খলা পরিপন্থী কার্যকলাপে জড়িত ছিল না। <br />
-            <div style='margin-top: 10px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;আমি তাহার সর্বাঙ্গীন উন্নতি কামনা করি।  </div>
+            <div style='margin-top: 10px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;আমি তাহার সর্বাঙ্গীন উন্নতি ও মঙ্গল  কামনা করিতেছি।            </div>
         </div>
     </div>
 </main>

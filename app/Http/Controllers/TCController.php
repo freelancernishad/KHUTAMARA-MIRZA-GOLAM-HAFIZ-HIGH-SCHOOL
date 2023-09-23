@@ -352,8 +352,8 @@ class TCController extends Controller
     </td>
     <td style='text-align:center'>
         <p class='fontsize2'>$school_details->SCHOLL_NAME</p>
-        <p class='fontsize1'>ডাকঘর- টেপ্রীগঞ্জ, উপজেলা- দেবীগঞ্জ, জেলা- পঞ্চগড়</p>
-        <p class='fontsize1'>স্থাপিতঃ ১৯৬৫ইং , <span style='font-size:14px'> MPO Code 7903061301</span> ,  <span style='font-size:14px'> EIIN No 125983</span> </p>
+        <p class='fontsize1'>$school_details->SCHOLL_ADDRESS</p>
+        <p class='fontsize1'>স্থাপিতঃ $school_details->SCHOLL_BUILD ,  <span style='font-size:14px'> EIIN No $school_details->SCHOLL_BUILD</span> </p>
 
     </td>
     <td style='text-align: right'>

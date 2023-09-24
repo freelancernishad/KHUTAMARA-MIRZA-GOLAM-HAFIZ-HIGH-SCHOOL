@@ -1787,7 +1787,7 @@ function characterCount($string)
     if($studentCount>0){
     $student =  student::where(['school_id'=>$school_id,'Year'=>$regYear])->orderBy('id','desc')->latest()->first();
     $admition_id = $student->AdmissionID;
-    $mutiple = (rand(1, 9));
+    $mutiple = (rand(2, 9));
         if($admition_id=='' || $admition_id==null){
                 $one = "0001";
                 $year = date("y");

@@ -73,7 +73,7 @@ class studentsController extends Controller
                 }else{
                     $newRoll = '1';
                 }
-                $StudentID = StudentId($student->StudentClass, $newRoll,$student->school_id,$group,date("y", strtotime('01-01-'.$paymentYear)));
+                $StudentID = StudentId("A",$student->StudentClass, $newRoll,$student->school_id,$group,date("y", strtotime('01-01-'.$paymentYear)));
 
                 $student->update(['StudentRoll' => $newRoll,'StudentID' => $StudentID,'Year' => $paymentYear,'StudentStatus' => 'active']);
 
@@ -272,7 +272,7 @@ class studentsController extends Controller
             $AdmissionID = (string)$admition_ID;
 
 
-            $StudentID = (string)StudentId($row[1],$row[0],$school_id,$row[2]);
+            $StudentID = (string)StudentId("A",$row[1],$row[0],$school_id,$row[2]);
 
 
             student::create([
@@ -444,14 +444,14 @@ die();
             $admition_id = $row[0]->AdmissionID;
             $roll = $row[0]->StudentRoll + 1;
             $admition_ID = (string)StudentAdmissionId($admition_id,$school_id);
-            $StudentID = StudentId($class, $roll,$school_id);
+            $StudentID = StudentId("A",$class, $roll,$school_id);
             $data = ['admition_ID' => $admition_ID, 'StudentID' => $StudentID, 'StudentRoll' => $row[0]->StudentRoll + 1];
         } else {
             $one = "0001";
             $year = date("dmy");
             $admition_ID = $school_id . $year . $one;
             ////////////////////////////////
-            $StudentID = StudentId($class, "1",$school_id);
+            $StudentID = StudentId("A",$class, "1",$school_id);
             $data = ['admition_ID' => $admition_ID, 'StudentID' => $StudentID, 'StudentRoll' => '1'];
         }
         return response()->json($data);
@@ -464,12 +464,13 @@ die();
        $StudentRoll = $request->StudentRoll;
        $StudentClass = $request->StudentClass;
        $StudentGroup = $request->StudentGroup;
+       $section = $request->section;
        $year = date('Y');
        if($bigsis){
 
-           return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->first();
+           return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->first();
        }
-       return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->count();
+       return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->count();
 
 
     }
@@ -518,8 +519,9 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
             $StudentRoll = $r->StudentRoll;
             $year = date('Y');
             $StudentGroup = $r->StudentGroup;
+            $section = $r->section;
 // return StudentId($StudentClass,$StudentRoll,$school_id,$StudentGroup);
-            $studentcount =  student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->count();
+            $studentcount =  student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->count();
 
             if ($id == '') {
             if($studentcount>0){
@@ -530,7 +532,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                 return $resp;
             }
             }
-                $data['StudentID'] = (string)StudentId($StudentClass,$StudentRoll,$school_id,$StudentGroup);
+                $data['StudentID'] = (string)StudentId($section,$StudentClass,$StudentRoll,$school_id,$StudentGroup);
             }
 
             $AdmissionID = (string)StudentAdmissionId('',$school_id);

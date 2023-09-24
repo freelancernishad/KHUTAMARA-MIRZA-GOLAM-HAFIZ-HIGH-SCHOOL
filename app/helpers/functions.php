@@ -1802,9 +1802,15 @@ function characterCount($string)
         }
 }
 
- function StudentId($class, $roll,$school_id,$StudentGroup='Humanities',$year='')
+ function StudentId($section="A",$class, $roll,$school_id,$StudentGroup='Humanities',$year='')
 {
 
+    if($section=='A'){
+        $sectionNumber = 1;
+    }else{
+        $sectionNumber = 2;
+
+    }
     if(!$year){
         $year = date("y");
     }
@@ -1822,7 +1828,7 @@ function characterCount($string)
     $classid = str_pad($classidd, 2, '0', STR_PAD_LEFT);
     $yearid = $year;
     $rollid = str_pad($roll, 3, '0', STR_PAD_LEFT);
-    return $school_id . $yearid . $classid.$groupcode . $rollid;
+    return $school_id . $yearid . $classid.$groupcode.$sectionNumber.$rollid;
 }
 
 
@@ -3190,7 +3196,7 @@ function SchoolPad($school_id,$marginBottom='20px')
             <td style='border:0 !important'>
                 <p class='fontsize2' style='font-size:30px'> $schoolDetails->SCHOLL_NAME </p>
                 <p class='fontsize1' style='font-size:20px'> $schoolDetails->SCHOLL_ADDRESS  </p>
-                
+
             </td>
 
 

@@ -55,6 +55,21 @@
                                         <option v-for="(group, ind) in groups" :key="'group' + ind">{{ group }}</option>
                                     </select>
                                 </div>
+
+
+                                <div class='form-group' v-else>
+                                    <label class="form_label">শাখা</label>
+                                    <select class="form-control" style="width: 100%;" v-model="form.section" @change="checkRoll"  >
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option>A</option>
+                                        <option>B</option>
+                                    </select>
+                                </div>
+
+
+
+
+
                                 <div class="form-group">
                                     <label for="">রোল</label>
                                     <input type="text" v-model="form.StudentRoll" class="form-control">
@@ -163,6 +178,7 @@ export default {
                 paymenttype: '',
                 student_class: '',
                 StudentGroup: 'Humanities',
+                section: 'A',
                 StudentRoll: '',
             },
             student: {},

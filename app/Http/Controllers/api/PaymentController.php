@@ -68,6 +68,7 @@ class PaymentController extends Controller
 
         $student_class = $request->student_class;
         $StudentGroup = $request->StudentGroup;
+        $section = $request->section;
         $StudentRoll = $request->StudentRoll;
 
         $month = $request->month;
@@ -188,7 +189,7 @@ class PaymentController extends Controller
                     $studentid = $student->id;
                     $StudentUID = $student->StudentID;
                 }else{
-                    $student = student::where(['StudentClass' => $student_class,'StudentRoll' => $StudentRoll,'StudentStatus'=>'active'])->latest()->first();
+                    $student = student::where(['StudentClass' => $student_class,'StudentRoll' => $StudentRoll,'section' => $section,'StudentStatus'=>'active'])->latest()->first();
                     $AdmissionID = $student->AdmissionID;
                     $StudentClass = $student->StudentClass;
                     $studentid = $student->id;

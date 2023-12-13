@@ -218,6 +218,26 @@
 
                     <div class="col-md-12 mb-3">
                         <a target="_blank" style="float: right;font-size: 18px;margin-bottom: 10px;" href="/dashboard/student/paymnetsheet/annual?school_id=125983" class="btn btn-info">Download Annual Reports</a>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <select class="form-control" v-model="paymentYear">
+                                        <option>2024</option>
+                                        <option>2023</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-info" @click="changePaymentYear">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+
+
+
+
                         <div class="table-responsive" v-html="annuallyReports"></div>
                     </div>
                     <div class="col-md-12">
@@ -553,6 +573,7 @@ export default {
     data() {
         return {
 
+            paymentYear:2024,
             year:new Date().getFullYear(),
             totalstudents:0,
             marksheetDownload:0,
@@ -590,8 +611,11 @@ export default {
             this.smsDetails = res.data.data;
         },
 
+        changePaymentYear(){
+            this.getAnnualReport();
+        },
         async getAnnualReport(){
-            var res = await this.callApi('get','/api/get/annually/report?year=2024',[]);
+            var res = await this.callApi('get',`/api/get/annually/report?year=${this.paymentYear}`,[]);
             this.annuallyReports = res.data;
         },
 

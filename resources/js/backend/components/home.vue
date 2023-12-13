@@ -591,7 +591,7 @@ export default {
         },
 
         async getAnnualReport(){
-            var res = await this.callApi('get','/api/get/annually/report',[]);
+            var res = await this.callApi('get','/api/get/annually/report?year=2024',[]);
             this.annuallyReports = res.data;
         },
 

@@ -1694,6 +1694,8 @@ class PaymentController extends Controller
     public function getAnnuallyReport(Request $request)
     {
 
+   
+
         if($request->year){
             $year = $request->year;
         }else{

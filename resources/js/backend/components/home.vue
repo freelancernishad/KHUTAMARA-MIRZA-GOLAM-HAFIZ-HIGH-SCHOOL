@@ -238,7 +238,7 @@
 
 
 
-                        <div class="table-responsive" v-html="annuallyReports"></div>
+                        <div class="table-responsive" ref="annuallyReportsContainer"></div>
                     </div>
                     <div class="col-md-12">
 
@@ -492,6 +492,7 @@
     </div>
 </template>
 <script>
+
 // import { mapState,mapActions } from 'vuex';
 export default {
     computed: {
@@ -595,7 +596,7 @@ export default {
             },
             reports:{},
             smsDetails:{},
-            annuallyReports:{},
+            annuallyReports:'',
 
 
         };
@@ -609,16 +610,23 @@ export default {
         async getSmsNoc(){
             var res = await this.callApi('get','/api/get/balance',[]);
             this.smsDetails = res.data.data;
+
         },
 
         changePaymentYear(){
             this.getAnnualReport();
         },
         async getAnnualReport(){
+        
             var res = await this.callApi('get',`/api/get/annually/report?year=${this.paymentYear}`,[]);
             this.annuallyReports = res.data;
-        },
+            this.renderHTML();
 
+
+        },
+        renderHTML() {
+            this.$refs.annuallyReportsContainer.innerHTML = this.annuallyReports;
+        },
 
 
             getmonth(){

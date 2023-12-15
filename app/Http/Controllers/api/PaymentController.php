@@ -360,7 +360,7 @@ class PaymentController extends Controller
                             'amount'=>$monthly_fee,
                             'sub_type'=>'',
                         ]);
-                        
+
                 }else{
 
                     foreach ($allMonth as $value) {
@@ -1172,7 +1172,14 @@ class PaymentController extends Controller
             'amount'=>$monthly_fee,
             'sub_type'=>'',
         ]);
-    }else{
+    }elseif($MonthName=='December'){
+        array_push($monthlyPaid,[
+            'key'=>month_en_to_bn('January'),
+            'amount'=>$monthly_fee,
+            'sub_type'=>'',
+        ]);
+
+}else{
 
 
 

@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Meneses\LaravelMpdf\Facades\LaravelMpdf;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 use App\Models\notice;
 use App\Models\routine;
 use App\Models\staff;

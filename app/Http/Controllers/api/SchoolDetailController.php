@@ -596,7 +596,7 @@ class SchoolDetailController extends Controller
             //year list
 
             $cerrentYear = date('Y');
-            $first = $cerrentYear + 1 - 1;
+            $first = $cerrentYear + 1;
             array_push($data, $first);
             for ($i = 0; $i < 25; $i++) {
                 $cerrentYear = $cerrentYear - 1;

@@ -217,7 +217,7 @@
                 <div class="row">
 
                     <div class="col-md-12 mb-3">
-                        <a target="_blank" style="float: right;font-size: 18px;margin-bottom: 10px;" href="/dashboard/student/paymnetsheet/annual?school_id=125983" class="btn btn-info">Download Annual Reports</a>
+                        <a target="_blank" style="float: right;font-size: 18px;margin-bottom: 10px;" href="/dashboard/student/paymnetsheet/annual?school_id=125994" class="btn btn-info">Download Annual Reports</a>
 
                       <div class="row">
                         <div class="col-md-6">
@@ -617,7 +617,7 @@ export default {
             this.getAnnualReport();
         },
         async getAnnualReport(){
-        
+
             var res = await this.callApi('get',`/api/get/annually/report?year=${this.paymentYear}`,[]);
             this.annuallyReports = res.data;
             this.renderHTML();

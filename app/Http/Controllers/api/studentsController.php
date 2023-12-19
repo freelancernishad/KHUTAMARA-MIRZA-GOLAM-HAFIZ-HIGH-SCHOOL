@@ -1215,7 +1215,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
             <p class='defalttext'>$address</p>
-            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>
+            <p class='defalttext' style='font-size:12px'>Website: www.kmghhs.edu.bd</p>
             ";
 
             if($status=='Paid'){
@@ -1581,7 +1581,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
             <p style='text-align:right;font-size:16px'>শিক্ষার্থীর কপি</p>
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
             <p class='defalttext'>$address</p>
-            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>";
+            <p class='defalttext' style='font-size:12px'>Website: www.kmghhs.edu.bd</p>";
 
             if($status=='Paid'){
                 $html .="            <h2 class='companiname' style='width: 160px;

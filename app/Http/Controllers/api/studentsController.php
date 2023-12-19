@@ -1151,7 +1151,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
         }
         .defaltfont {
-            font-size: 18px;
+            font-size: 14px;
         }
 
 
@@ -1215,7 +1215,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
             <p class='defalttext'>$address</p>
-
+            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>
             ";
 
             if($status=='Paid'){
@@ -1320,7 +1320,10 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                    'monthly_fee'=>'মাসিক বেতন',
                                    'exam_fee'=>'পরীক্ষার ফি',
                                    'registration_fee'=>'রেজিস্ট্রেশন ফি',
-                                   'form_filup_fee'=>'ফরম পূরণ ফি',
+                                   'board_fee'=>'বোর্ড ফি',
+                                   'center_fee'=>'কেন্দ্র ফি',
+                                   'late_fees'=>'বিলম্ব ফি',
+                                   'Pension_and_Welfare_Trust'=>'অবসর ও কল্যাণ ট্রাস্ট',
                             ];
 
                             $kahts = json_decode(json_encode($khat));
@@ -1336,6 +1339,13 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 if($paymentSessionCount>0){
                                     $paymentSession = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'session_fee'])->first();
                                    $sessionFee  = $paymentSession->amount;
+                                }
+
+                                $pension_and_Welfare_TrustFee = 0;
+                                $paymentPension_and_Welfare_TrustCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'pension_and_Welfare_Trust'])->count();
+                                if($paymentPension_and_Welfare_TrustCount>0){
+                                    $paymentPension_and_Welfare_Trust = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'pension_and_Welfare_Trust'])->first();
+                                   $pension_and_Welfare_TrustFee  = $paymentPension_and_Welfare_Trust->amount;
                                 }
 
 
@@ -1355,6 +1365,9 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                    $registration_fee  = $registration_feeTd->amount;
                                 }
 
+
+
+
                                 $form_filup_fee = 0;
                                 $form_filup_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee'])->count();
                                 if($form_filup_feeCount>0){
@@ -1362,6 +1375,42 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                    $form_filup_fee  = $form_filup_feeTd->amount;
                                 }
 
+
+//////////////////////////////////////
+
+                                $board_fee = 0;
+                                $board_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'board_fee'])->count();
+                                if($board_feeCount>0){
+                                    $board_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'board_fee'])->first();
+                                   $board_fee  = $board_feeTd->amount;
+                                }
+
+
+                                $center_fee = 0;
+                                $center_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'center_fee'])->count();
+                                if($center_feeCount>0){
+                                    $center_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'center_fee'])->first();
+                                   $center_fee  = $center_feeTd->amount;
+                                }
+
+
+                                $late_fees = 0;
+                                $late_feesCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'late_fees'])->count();
+                                if($late_feesCount>0){
+                                    $late_feesTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'late_fees'])->first();
+                                   $late_fees  = $late_feesTd->amount;
+                                }
+
+                                $Fother_fee = 0;
+                                $other_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'other_fee'])->count();
+                                if($other_feeCount>0){
+                                    $other_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'other_fee'])->first();
+                                   $Fother_fee  = $other_feeTd->amount;
+                                }
+
+
+
+////////////////////////////////////////
 
                                  $paymentss = payment::where(['trxid'=>$invoiceId,'status'=>'Paid'])->get();
 
@@ -1407,14 +1456,45 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 <td class='td  defaltfont'>".int_en_to_bn($registration_fee)."</td>
                                 </tr>
 
+
+
+
                                 <tr class='tr items'>
                                 <td class='td  defaltfont'>".int_en_to_bn(6)."</td>
-                                <td class='td  defaltfont'>ফরম পূরণ ফি</td>
-                                <td class='td  defaltfont'>".int_en_to_bn($form_filup_fee)."</td>
+                                <td class='td  defaltfont'>ফরম পূরণ (বোর্ড ফি)</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($board_fee)."</td>
+                                </tr>
+
+
+                                <tr class='tr items'>
+                                <td class='td  defaltfont'>".int_en_to_bn(7)."</td>
+                                <td class='td  defaltfont'>ফরম পূরণ (কেন্দ্র ফি)</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($center_fee)."</td>
+                                </tr>
+
+
+                                <tr class='tr items'>
+                                <td class='td  defaltfont'>".int_en_to_bn(8)."</td>
+                                <td class='td  defaltfont'>ফরম পূরণ (বিলম্ব ফি)</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($late_fees)."</td>
+                                </tr>
+
+                                <tr class='tr items'>
+                                <td class='td  defaltfont'>".int_en_to_bn(9)."</td>
+                                <td class='td  defaltfont'>ফরম পূরণ (বিবিধ ফি)</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($Fother_fee)."</td>
+                                </tr>
+
+
+
+                                <tr class='tr items'>
+                                <td class='td  defaltfont'>".int_en_to_bn(10)."</td>
+                                <td class='td  defaltfont'>অবসর ও কল্যাণ ট্রাস্ট</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($pension_and_Welfare_TrustFee)."</td>
                                 </tr>
 
                                 ";
-                                $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$form_filup_fee;
+                                $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
 
 
                             }else{
@@ -1500,8 +1580,8 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
             <p style='text-align:right;font-size:16px'>শিক্ষার্থীর কপি</p>
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
-            <p class='defalttext'>$address</p>";
-
+            <p class='defalttext'>$address</p>
+            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>";
 
             if($status=='Paid'){
                 $html .="            <h2 class='companiname' style='width: 160px;
@@ -1691,15 +1771,42 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                             <td class='td  defaltfont'>".int_en_to_bn($registration_fee)."</td>
                             </tr>
 
+
+
                             <tr class='tr items'>
                             <td class='td  defaltfont'>".int_en_to_bn(6)."</td>
-                            <td class='td  defaltfont'>ফরম পূরণ ফি</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($form_filup_fee)."</td>
+                            <td class='td  defaltfont'>ফরম পূরণ (বোর্ড ফি)</td>
+                            <td class='td  defaltfont'>".int_en_to_bn($board_fee)."</td>
+                            </tr>
+
+
+                            <tr class='tr items'>
+                            <td class='td  defaltfont'>".int_en_to_bn(7)."</td>
+                            <td class='td  defaltfont'>ফরম পূরণ (কেন্দ্র ফি)</td>
+                            <td class='td  defaltfont'>".int_en_to_bn($center_fee)."</td>
+                            </tr>
+
+
+                            <tr class='tr items'>
+                            <td class='td  defaltfont'>".int_en_to_bn(8)."</td>
+                            <td class='td  defaltfont'>ফরম পূরণ (বিলম্ব ফি)</td>
+                            <td class='td  defaltfont'>".int_en_to_bn($late_fees)."</td>
+                            </tr>
+                            <tr class='tr items'>
+                            <td class='td  defaltfont'>".int_en_to_bn(9)."</td>
+                            <td class='td  defaltfont'>ফরম পূরণ (বিবিধ ফি)</td>
+                            <td class='td  defaltfont'>".int_en_to_bn($Fother_fee)."</td>
+                            </tr>
+
+
+                            <tr class='tr items'>
+                            <td class='td  defaltfont'>".int_en_to_bn(10)."</td>
+                            <td class='td  defaltfont'>অবসর ও কল্যাণ ট্রাস্ট</td>
+                            <td class='td  defaltfont'>".int_en_to_bn($pension_and_Welfare_TrustFee)."</td>
                             </tr>
 
                             ";
-                            $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$form_filup_fee;
-
+                            $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
 
                         }else{
                             $index = 1;
@@ -1788,7 +1895,6 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
         return $html;
     }
-
 
 
     public function exam_admit($admissionId,$ex_name)

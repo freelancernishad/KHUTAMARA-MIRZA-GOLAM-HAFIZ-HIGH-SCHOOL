@@ -1657,9 +1657,9 @@ class PaymentController extends Controller
     public function invoice(Request $r, $id)
     {
         $rows = DB::table('payments')->where('id', $id)->first();
-        $StudentID = $rows->studentId;
+        $StudentID = $rows->admissionId;
         $wds = [
-            'StudentID' => $StudentID,
+            'AdmissionID' => $StudentID,
         ];
         $stdata = DB::table('students')->where($wds)->first();
         $data['types'] = 'pdf';

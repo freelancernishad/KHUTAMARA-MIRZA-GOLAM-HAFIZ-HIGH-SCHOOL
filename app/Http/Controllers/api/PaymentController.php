@@ -224,6 +224,7 @@ class PaymentController extends Controller
             'status' => 'Paid',
         ];
         if($type=='monthly_fee'){
+
             $paymentfilter['month'] = $month;
         }
 
@@ -271,10 +272,10 @@ class PaymentController extends Controller
         $MonthName =  date('F');
 
         $year = date('Y');
-        $yearSession = date('Y');
-        if($MonthName=='December'){
-            $yearSession = date('Y')+1;
-        }
+        $yearSession = $student->Year;
+        // if($MonthName=='December'){
+        //     $yearSession = date('Y')+1;
+        // }
 
 
 
@@ -294,17 +295,17 @@ class PaymentController extends Controller
 
 
 
-      $registration_feeCount =    $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $year],'count');
+      $registration_feeCount =    $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
         if($registration_feeCount>0){
-            $registration_feeGet =    $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $year],'get');
+            $registration_feeGet =    $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'get');
             $registration_feeButton = "<span class='btn btn-success'>Paid</span> <a class='btn btn-info' target='_blank' href='/student/applicant/invoice/$registration_feeGet->trxid'>রশিদ ডাউনলোড</a>";
         }else{
             $registration_feeButton = "<a  href='/payment?studentId=$studentid&type=registration_fee' class='btn btn-info'>Pay Now</a>";
         }
 
-      $form_filup_feeCount =    $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $year],'count');
+      $form_filup_feeCount =    $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
         if($form_filup_feeCount>0){
-            $form_filup_feeGet =    $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $year],'get');
+            $form_filup_feeGet =    $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'get');
             $form_filup_feeButton = "<span class='btn btn-success'>Paid</span> <a class='btn btn-info' target='_blank' href='/student/applicant/invoice/$form_filup_feeGet->trxid'>রশিদ ডাউনলোড</a>";
         }else{
             $form_filup_feeButton = "<a  href='/payment?studentId=$studentid&type=form_filup_fee' class='btn btn-info'>Pay Now</a>";
@@ -331,9 +332,9 @@ class PaymentController extends Controller
             ]);
         }
 
-        // if($studentStatus=='Approve'){
+        if($studentStatus=='Approve'){
 
-        $Pension_and_Welfare_Trust_feeCount =  $this->PaymentCount(['type' => 'Pension_and_Welfare_Trust','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024'],'count');
+        $Pension_and_Welfare_Trust_feeCount =  $this->PaymentCount(['type' => 'Pension_and_Welfare_Trust','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
 
         if(!$Pension_and_Welfare_Trust_feeCount){
             array_push($monthlyPaid,[
@@ -341,7 +342,7 @@ class PaymentController extends Controller
                 'amount'=>100,
             ]);
         }
-    // }
+    }
         // return $monthlyPaid;
 
 
@@ -354,17 +355,43 @@ class PaymentController extends Controller
                         'amount'=>$monthly_fee,
                         'sub_type'=>'',
                     ]);
-                }elseif($MonthName=='December'){
+                }else{
+                    if($MonthName=='December'){
+
+
+
+
+        $Pension_and_Welfare_Trust_feeCount =  $this->PaymentCount(['type' => 'Pension_and_Welfare_Trust','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
+
+        if(!$Pension_and_Welfare_Trust_feeCount){
+            array_push($monthlyPaid,[
+                'key'=>'অবসর ও কল্যাণ ট্রাস্ট',
+                'amount'=>100,
+            ]);
+        }
+
+
+
+                    $monthly_feeCountJ =    $this->PaymentCount(['type' => 'monthly_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession,'month' => 'January'],'count');
+                    if($monthly_feeCountJ>0){
+                    }else{
                         array_push($monthlyPaid,[
                             'key'=>month_en_to_bn('January'),
                             'amount'=>$monthly_fee,
                             'sub_type'=>'',
                         ]);
+                    }
+
+
+
+
 
                 }else{
 
+
+
                     foreach ($allMonth as $value) {
-                        $monthly_feeCount =    $this->PaymentCount(['type' => 'monthly_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024','month' => $value],'count');
+                        $monthly_feeCount =    $this->PaymentCount(['type' => 'monthly_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession,'month' => $value],'count');
                         if($monthly_feeCount>0){
                         }else{
                             array_push($monthlyPaid,[
@@ -406,6 +433,10 @@ class PaymentController extends Controller
 
 
 
+                }
+
+
+
 
 
 
@@ -421,7 +452,7 @@ class PaymentController extends Controller
            $Schoolfee = SchoolFee::where(['class'=>$StudentClass,'type'=>'exam_fee','sub_type'=>$exName])->first();;
             $exFee = $Schoolfee->fees;
             $index_number = $Schoolfee->index_number;
-            $Exam_feeStatusCount =  $this->PaymentCount(['type' => 'exam_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024','ex_name' => $exName],'count');
+            $Exam_feeStatusCount =  $this->PaymentCount(['type' => 'exam_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession,'ex_name' => $exName],'count');
 
             if(!$Exam_feeStatusCount){
                 $insertedData = array(["key"=>ex_name($exName),"amount"=>$exFee,"sub_type"=>$exName]);
@@ -437,7 +468,7 @@ class PaymentController extends Controller
            $Schoolfee = SchoolFee::where(['class'=>$StudentClass,'type'=>'registration_fee'])->first();;
             $RegFee = $Schoolfee->fees;
             $index_number = $Schoolfee->index_number;
-            $Registration_feeStatusCount =  $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024'],'count');
+            $Registration_feeStatusCount =  $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
 
             if(!$Registration_feeStatusCount){
                 $insertedData = array(["key"=>'রেজিস্ট্রেশন ফি',"amount"=>$RegFee,"sub_type"=>'']);
@@ -452,7 +483,7 @@ class PaymentController extends Controller
            $Schoolfee = SchoolFee::where(['class'=>$StudentClass,'type'=>'form_filup_fee'])->first();;
             $FornFee = $Schoolfee->fees;
             $index_number = $Schoolfee->index_number;
-            $Form_filup_feeStatusCount =  $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024'],'count');
+            $Form_filup_feeStatusCount =  $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
 
             if(!$Form_filup_feeStatusCount){
 
@@ -1125,10 +1156,16 @@ class PaymentController extends Controller
 
         $MonthName =  date('F');
         $year = date('Y');
-        $yearSession = date('Y');
-        if($MonthName=='December'){
-            $yearSession = date('Y')+1;
-        }
+
+        $yearSession = $student->Year;
+        // $yearSession = date('Y');
+
+        // if($MonthName=='December'){
+        //     $yearSession = date('Y')+1;
+        // }
+
+        if($student->Year)
+
       $session_feeCount =    $this->PaymentCount(['type' => 'session_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
       if($session_feeCount>0){
           $session_feeStatus = 'Paid';
@@ -1172,19 +1209,12 @@ class PaymentController extends Controller
             'amount'=>$monthly_fee,
             'sub_type'=>'',
         ]);
-    }elseif($MonthName=='December'){
-        array_push($monthlyPaid,[
-            'key'=>month_en_to_bn('January'),
-            'amount'=>$monthly_fee,
-            'sub_type'=>'',
-        ]);
-
-}else{
+    }else{
 
 
 
       foreach ($allMonth as $value) {
-        $monthly_feeCount =    $this->PaymentCount(['type' => 'monthly_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024','month' => $value],'count');
+        $monthly_feeCount =    $this->PaymentCount(['type' => 'monthly_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession,'month' => $value],'count');
 
         if($monthly_feeCount>0){
         }else{
@@ -1234,7 +1264,7 @@ class PaymentController extends Controller
           $exFee = $Schoolfee->fees;
 
           $index_number = $Schoolfee->index_number;
-          $Exam_feeStatusCount =  $this->PaymentCount(['type' => 'exam_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024','ex_name' => $exName],'count');
+          $Exam_feeStatusCount =  $this->PaymentCount(['type' => 'exam_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession,'ex_name' => $exName],'count');
 
           if(!$Exam_feeStatusCount){
             $totalamount +=  $exFee;
@@ -1252,7 +1282,7 @@ class PaymentController extends Controller
           $RegFee = $Schoolfee->fees;
 
           $index_number = $Schoolfee->index_number;
-          $Registration_feeStatusCount =  $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024'],'count');
+          $Registration_feeStatusCount =  $this->PaymentCount(['type' => 'registration_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
 
           if(!$Registration_feeStatusCount){
             $totalamount +=  $RegFee;
@@ -1269,7 +1299,7 @@ class PaymentController extends Controller
           $FornFee = $Schoolfee->fees;
 
           $index_number = $Schoolfee->index_number;
-          $Form_filup_feeStatusCount =  $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => '2024'],'count');
+          $Form_filup_feeStatusCount =  $this->PaymentCount(['type' => 'form_filup_fee','admissionId' => $AdmissionID,'status' => 'Paid','year' => $yearSession],'count');
 
           if(!$Form_filup_feeStatusCount){
 

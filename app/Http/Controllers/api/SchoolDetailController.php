@@ -596,10 +596,10 @@ class SchoolDetailController extends Controller
             //year list
 
             $cerrentYear = date('Y');
-            $first = $cerrentYear + 1;
-            array_push($data, $first);
+            $first = $cerrentYear+1;
+            // array_push($data, $first);
             for ($i = 0; $i < 25; $i++) {
-                $cerrentYear = $cerrentYear - 1;
+                $cerrentYear = $first-$i;
                 array_push($data, $cerrentYear);
                 //  echo $cerrentYear;
                 //  echo "<br>";

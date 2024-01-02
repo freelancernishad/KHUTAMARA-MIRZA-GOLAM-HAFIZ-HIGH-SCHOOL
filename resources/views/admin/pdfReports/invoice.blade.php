@@ -73,12 +73,12 @@ $bTotal = 0;
         </table>
         <table style=="width:400px !important">
             <tr>
-                <td colspan="2">অভিভাবকের নামঃ <span class="result">{{ $stdata->StudentFatherName }}</span></td>
+                <td colspan="2">অভিভাবকের নামঃ <span class="result">{{ $rows->StudentFatherName }}</span></td>
             </tr>
         </table>
         <table style=="width:400px !important">
             <tr>
-                <td> ঠিকানাঃ {{ $stdata->StudentAddress }}</td>
+                <td> ঠিকানাঃ {{ $rows->StudentAddress }}</td>
                 <td> শ্রেণীঃ {{ class_en_to_bn($rows->studentClass) }} </td>
                 <td> রোলঃ {{ int_en_to_bn($rows->studentRoll) }} </td>
             </tr>

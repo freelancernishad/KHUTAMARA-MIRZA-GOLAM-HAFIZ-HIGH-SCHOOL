@@ -1603,6 +1603,17 @@ class PaymentController extends Controller
             'Bamount' => 0,
         ];
         $oldItemg = json_encode($oldItem);
+
+
+
+        $dataType = $r->type;
+        if($r->type=='ভর্তি/সেশন ফি'){
+            $dataType ='session_fee';
+        }
+
+
+
+
         $data = [
             'school_id' => $r->school_id,
             'studentClass' => $r->StudentClass,
@@ -1613,7 +1624,7 @@ class PaymentController extends Controller
             'method' => $r->method,
             'amount' => $r->amount,
             'bokeya' => $oldItemg,
-            'type' => $r->type,
+            'type' => $dataType,
             'type_name' => $r->type_name,
             'date' => $r->date,
             'month' => $r->month,

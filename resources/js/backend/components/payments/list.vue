@@ -75,8 +75,8 @@
                             <option value="">
                                 SELECT
                             </option>
-                            <option value="Monthly_fee">মাসিক বেতন</option>
-                            <option value="Session_fee">সেশন ফি</option>
+                            <option value="monthly_fee">মাসিক বেতন</option>
+                            <option value="session_fee">সেশন ফি</option>
                             <option value="Exam_fee">পরিক্ষার ফি</option>
                             <option value="Other">অন্যান্য</option>
                         </select>
@@ -122,16 +122,16 @@
                                 <td class="tablecolhide">{{  paymentAmount  }}</td>
                                 <td class="tablecolhide">
                                     <span v-if="statustext == 'Looding...'">{{  statustext  }}</span>
-                                    <span v-else>{{  paidamount[studentList.StudentRoll]  }}</span>
+                                    <span v-else>{{  paidamount[studentList.AdmissionID]  }}</span>
                                 </td>
-                                <td :class="paidclass" v-if="status[studentList.StudentRoll] == 'Paid'">
+                                <td :class="paidclass" v-if="status[studentList.AdmissionID] == 'Paid'">
                                     <span v-if="statustext == 'Looding...'">{{  statustext  }}</span>
-                                    <span v-else>{{  status[studentList.StudentRoll]  }}</span>
+                                    <span v-else>{{  status[studentList.AdmissionID]  }}</span>
                                 </td>
                                 <td class='badge badge-pill badge-danger d-block mg-t-8' v-else>{{  statustext  }}</td>
                                 <td class="tablecolhide">
                                     <span v-if="statustext == 'Looding...'">{{  statustext  }}</span>
-                                    <span v-else>{{  paiddate[studentList.StudentRoll]  }}</span>
+                                    <span v-else>{{  paiddate[studentList.AdmissionID]  }}</span>
                                 </td>
                                 <td>
                                     <div v-if="statustext == 'Looding...'">{{  statustext  }}</div>
@@ -184,7 +184,7 @@ export default {
             year: null,
             month: null,
             type: null,
-            group: null,
+            group: 'All',
             examType: '',
             students: [],
             payments: [],
@@ -210,6 +210,7 @@ export default {
             if(this.filterdata.student_class=='Nine' || this.filterdata.student_class=='Ten'){
             }else{
                 this.filterdata.group = 'All'
+                this.group = 'All'
             }
         },
 
@@ -241,7 +242,7 @@ export default {
         },
         allpayments() {
             var url = '';
-            url = `/api/students/payments?filter[studentClass]=${this.payment_class}&filter[year]=${this.year}&filter[month]=${this.month}&filter[school_id]=${this.school_id}&filter[type]=${this.feesconvert(this.type)}&filter[type_name]=${this.examType}`;
+            url = `/api/students/payments?filter[studentClass]=${this.payment_class}&filter[year]=${this.year}&filter[month]=${this.month}&filter[school_id]=${this.school_id}&filter[type]=${this.type}&filter[type_name]=${this.examType}`;
             axios.get(url)
                 .then(({ data }) => {
                     this.payments = data
@@ -261,10 +262,10 @@ export default {
             this.paiddate = {};
             this.ids = {};
             this.payments.forEach((value, index) => {
-                this.status[value.studentRoll] = value.status;
-                this.paidamount[value.studentRoll] = value.amount;
-                this.paiddate[value.studentRoll] = value.date;
-                this.ids[value.studentRoll] = value.id;
+                this.status[value.admissionId] = value.status;
+                this.paidamount[value.admissionId] = value.amount;
+                this.paiddate[value.admissionId] = value.date;
+                this.ids[value.admissionId] = value.id;
             });
             this.statustext = 'Unpaid'
             this.paidclass = 'badge badge-pill badge-success d-block mg-t-8'

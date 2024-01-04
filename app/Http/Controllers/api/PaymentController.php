@@ -1607,7 +1607,7 @@ class PaymentController extends Controller
 
 
         $dataType = $r->type;
-        if($r->type=='ভর্তি/সেশন ফি'){
+        if($r->type=='ভর্তি/সেশন ফি' || $r->type=='সেশন ফি'){
             $dataType ='session_fee';
         }
 

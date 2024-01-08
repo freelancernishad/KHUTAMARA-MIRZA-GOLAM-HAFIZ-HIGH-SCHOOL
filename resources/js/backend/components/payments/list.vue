@@ -143,11 +143,11 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             <router-link
-                                                :to="{ name: 'paymentedit', params: { create: 'edit', id: ids[studentList.StudentRoll] } }"
-                                                v-if="status[studentList.StudentRoll] == 'Paid'" class="dropdown-item"
+                                                :to="{ name: 'paymentedit', params: { create: 'edit', id: ids[studentList.AdmissionID] } }"
+                                                v-if="status[studentList.AdmissionID] == 'Paid'" class="dropdown-item"
                                                 id=""><i class="fas fa-cogs"></i> Edit</router-link>
-                                            <a :href="'/school/payment/invoice/'+ids[studentList.StudentRoll]" target="_blank" class="dropdown-item"
-                                                v-if="status[studentList.StudentRoll] == 'Paid'" id=""><i
+                                            <a :href="'/school/payment/invoice/'+ids[studentList.AdmissionID]" target="_blank" class="dropdown-item"
+                                                v-if="status[studentList.AdmissionID] == 'Paid'" id=""><i
                                                     class="fas fa-download fa-fw"></i> Invoice</a>
                                             <router-link
                                                 :to="{ name: 'paymentcreate', params: { create: 'create', classname: studentList.StudentClass, year: year, month: month, type: type, id: studentList.id },query:{type_name:examType} }"

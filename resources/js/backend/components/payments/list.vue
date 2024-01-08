@@ -263,6 +263,8 @@ export default {
             this.ids = {};
             this.payments.forEach((value, index) => {
                 this.status[value.admissionId] = value.status;
+                console.log(value)
+
                 this.paidamount[value.admissionId] = value.amount;
                 this.paiddate[value.admissionId] = value.date;
                 this.ids[value.admissionId] = value.id;

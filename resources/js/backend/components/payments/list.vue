@@ -146,7 +146,7 @@
                                                 :to="{ name: 'paymentedit', params: { create: 'edit', id: ids[studentList.AdmissionID] } }"
                                                 v-if="status[studentList.AdmissionID] == 'Paid'" class="dropdown-item"
                                                 id=""><i class="fas fa-cogs"></i> Edit</router-link>
-                                            <a :href="'/school/payment/invoice/'+ids[studentList.AdmissionID]" target="_blank" class="dropdown-item"
+                                            <a :href="'/student/applicant/invoice/'+trxids[studentList.AdmissionID]" target="_blank" class="dropdown-item"
                                                 v-if="status[studentList.AdmissionID] == 'Paid'" id=""><i
                                                     class="fas fa-download fa-fw"></i> Invoice</a>
                                             <router-link
@@ -196,6 +196,7 @@ export default {
             paidamount: {},
             paiddate: {},
             ids: {},
+            trxids: {},
             statustext: 'Looding...',
             paymentAmount: '',
             newsearch: 'newsearch',
@@ -261,6 +262,7 @@ export default {
             this.paidamount = {};
             this.paiddate = {};
             this.ids = {};
+            this.trxids = {};
             this.payments.forEach((value, index) => {
                 this.status[value.admissionId] = value.status;
                 console.log(value)
@@ -268,6 +270,7 @@ export default {
                 this.paidamount[value.admissionId] = value.amount;
                 this.paiddate[value.admissionId] = value.date;
                 this.ids[value.admissionId] = value.id;
+                this.trxids[value.admissionId] = value.trxid;
             });
             this.statustext = 'Unpaid'
             this.paidclass = 'badge badge-pill badge-success d-block mg-t-8'

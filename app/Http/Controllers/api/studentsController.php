@@ -1021,11 +1021,15 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
 
 
-    public function applicant_invoice($trxid)
+    public function applicant_invoice(Request $request, $trxid)
     {
-
         $transId = $trxid;
+        if($request->d=='admin'){
+            $payment = payment::where(['id'=>$transId,'status'=>'Paid'])->first();
+        }else{
         $payment = payment::where(['trxid'=>$transId,'status'=>'Paid'])->first();
+        }
+
 
         $AdmissionID = $payment->admissionId;
 

@@ -1631,42 +1631,46 @@ class PaymentController extends Controller
             'year' => $r->year,
             'status' => $r->status,
         ];
-        $wh = [
-            'StudentID' => $r->StudentID,
-        ];
-        $StudentPhoneNumber = DB::table('students')->where($wh)->get()[0]->StudentPhoneNumber;
-        $messages = array();
-        $responsemessege = [];
-        if ($r->type == 'পরিক্ষার ফি') {
-            $message = "আপনার সন্তানের " . $r->type_name . " ফি " . int_en_to_bn($r->amount) . " টাকা বিদ্যালয়ে জমা হয়েছে";
-        } else {
-            $message = "আপনার সন্তানের " . month_en_to_bn($r->month) . " মাসের বেতন " . int_en_to_bn($r->amount) . " টাকা বিদ্যালয়ে জমা হয়েছে";
-        }
-        array_push(
-            $messages,
-            [
-                "number" => '88' . int_bn_to_en($StudentPhoneNumber),
-                "message" => "$message"
-            ]
-        );
+
+
+
+
+
+
         if ($formtype == 'create') {
+
+
+            $wh = [
+                'StudentID' => $r->StudentID,
+            ];
+
+            $student = DB::table('students')->where($wh)->get()[0];
+            $StudentPhoneNumber = $student->StudentPhoneNumber;
+
+
+                $trnx_id = time().rand(1,50);
+                $cust_info = [
+                    "cust_email" => "",
+                    "cust_id" => "$r->StudentID",
+                    "cust_mail_addr" => "Address",
+                    "cust_mobo_no" => "$StudentPhoneNumber",
+                    "cust_name" => "Customer Name"
+                ];
+                $trns_info = [
+                    "ord_det" => $dataType,
+                    "ord_id" => $student->AdmissionID,
+                    "trnx_amt" => $r->amount,
+                    "trnx_currency" => "BDT",
+                    "trnx_id" => "$trnx_id"
+                ];
+               $redirectutl = ekpayToken($trnx_id, $trns_info, $cust_info);
+               $data['paymentUrl'] = $redirectutl;
+
+
+
             $data = payment::create($data);
 
-
-
-            // try {
-            //     $msgs = sendMessages($messages);
-            //     foreach ($msgs as $value) {
-            //         array_push($responsemessege, 'Sms Successfully Sent To : ' . $value["number"]);
-            //     }
-            // } catch (Exception $e) {
-            //     array_push($responsemessege, $e->getMessage());
-            // }
-
-
-
-
-
+            return $redirectutl;
 
         } else {
             $payment = payment::find($id);

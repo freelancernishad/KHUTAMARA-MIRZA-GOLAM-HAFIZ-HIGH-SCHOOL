@@ -26,6 +26,7 @@ use App\Http\Controllers\api\HomeworkController;
 use App\Http\Controllers\api\studentsController;
 use App\Http\Controllers\QuestionbankController;
 use App\Http\Controllers\api\SchoolDetailController;
+use App\Http\Controllers\AssessmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/getip', function (Request $request) {
+
+ return $_SERVER['REMOTE_ADDR'];
 
 
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'https://tepriganjhighschool.edu.bd/getip.php',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+
+});
 
 Route::group([
 
@@ -155,10 +179,11 @@ Route::get('/student/attendance/count',[studentsController::class , 'student_att
 Route::post('/student/attendance/submit',[studentsController::class , 'student_attendance_submit']);
 Route::get('/student/attendance/row',[studentsController::class , 'student_attendance_row']);
 
+Route::get('/get/form/fillup/students',[studentsController::class , 'formfillupstudents']);
 
 
 Route::post('/student/transferto/old',[studentsController::class , 'transertoOld']);
-
+Route::post('/another/school/data',[studentsController::class , 'addAnotherSchoolData']);
 
 
 
@@ -288,6 +313,14 @@ Route::get('/answeres',[OnlineexamController::class , 'answeres']);
 Route::get('/school/fees',[SchoolFeeController::class , 'index']);
 Route::get('/school/fees/{id}',[SchoolFeeController::class , 'show']);
 Route::post('/school/update/fees',[SchoolFeeController::class , 'update']);
+
+
+
+
+
+Route::get('/assessments',[AssessmentController::class , 'getStudentAssessment']);
+Route::post('/assessments',[AssessmentController::class , 'store']);
+Route::get('/assessment/students',[AssessmentController::class , 'getStudent']);
 
     // Route::prefix('v1')->group(function () {
 

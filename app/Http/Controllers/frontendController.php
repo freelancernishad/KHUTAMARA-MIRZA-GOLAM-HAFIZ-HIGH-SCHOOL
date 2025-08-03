@@ -1,16 +1,17 @@
 <?php
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
+use Mail;
+use App\Models\blog;
+use App\Models\Event;
+use App\Models\staff;
 use App\Models\notice;
 use App\Models\routine;
-use App\Models\staff;
-use App\Models\Event;
-use App\Models\blog;
+use Illuminate\Http\Request;
 use App\Models\school_detail;
 use App\Models\StudentResult;
-use Mail;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 class frontendController extends Controller
@@ -342,7 +343,7 @@ class frontendController extends Controller
             $farmerStudent += $farmerStudentcount;
 
             //agricultural_laborerStudent
-            $agricultural_laborerStudentcount = $this->studentCount($school_id,'StudentFatherOccupation','কৃষি শ্রমিক',$class[$i]);
+            $agricultural_laborerStudentcount = $this->studentCount($school_id,'StudentFatherOccupation','জীবন ও জীবিকা শ্রমিক',$class[$i]);
             $students[class_en_to_bn($class[$i])]['agricultural_laborerStudent'] =int_en_to_bn($agricultural_laborerStudentcount);
             $agricultural_laborerStudent += $agricultural_laborerStudentcount;
 
@@ -382,7 +383,7 @@ class frontendController extends Controller
             $teacherStudent += $teacherStudentcount;
 
             //There_is_no_quotaStudent
-            $Non_agricultural_workersStudentcount = $this->studentCount($school_id,'StudentFatherOccupation','অকৃষি শ্রমিক',$class[$i]);
+            $Non_agricultural_workersStudentcount = $this->studentCount($school_id,'StudentFatherOccupation','অজীবন ও জীবিকা শ্রমিক',$class[$i]);
             $students[class_en_to_bn($class[$i])]['Non_agricultural_workersStudent'] =int_en_to_bn($Non_agricultural_workersStudentcount);
             $Non_agricultural_workersStudent += $Non_agricultural_workersStudentcount;
 
@@ -478,7 +479,12 @@ class frontendController extends Controller
             $data['school_id'] = $school_id;
 
             // return view('admin/pdfReports.studentAllReport', $data);
-            $pdf = LaravelMpdf::loadView('admin/pdfReports.studentAllReport', $data);
+
+
+            $pdfFileName= 'information.pdf';
+             return PdfMaker('A4',$school_id,view('admin/pdfReports.studentAllReport',$data),$pdfFileName);
+
+            // $pdf = LaravelMpdf::loadView('admin/pdfReports.studentAllReport', $data);
             return $pdf->stream("$fileName.pdf");
         }
 
@@ -661,6 +667,7 @@ $data['year'] = $year;
             'exam_name' => $exam_name,
             'class_group' => $group,
         ];
+        $schoolDetails = school_detail::where('school_id',$school_id)->first();
         $check = DB::table('student_results')->where($wd)->count();
         if ($check > 0) {
             $results = StudentResult::where($wd)->first();
@@ -669,6 +676,10 @@ $data['year'] = $year;
             'margin_right' => 5,
             'margin_top' => 6,
             'margin_bottom' => 6,]);
+
+            $mpdf->showWatermarkImage = true;
+            $mpdf->WriteHTML("<watermarkimage src='".base64($schoolDetails->logo)."'  alpha='0.15' size='150,150' position='30,65'/> ");
+
 
             // $mpdf = new \Mpdf\Mpdf([
             //     'mode' => 'utf-8', 'format' => 'A4', 'default_font' => 'bangla', 'margin_left' => 5,

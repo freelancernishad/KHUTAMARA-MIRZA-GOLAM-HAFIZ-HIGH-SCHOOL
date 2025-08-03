@@ -293,11 +293,10 @@ export default {
                  this.preloader = true;
                 axios.post(`/api/students/payments/submit`,this.form)
                 .then(({data}) => {
-                    window.location.href = data;
-                     console.log(data)
+                    //  console.log(data)
 
 
-                    // this.$router.push({name:'paymentsearch', params: { classname: this.form.StudentClass, year: this.form.year, month:this.form.month, type:this.feesconvert(this.form.type) },query:{type_name:this.$route.query.type_name}})
+                    this.$router.push({name:'paymentsearch', params: { classname: this.form.StudentClass, year: this.form.year, month:this.form.month, type:this.feesconvert(this.form.type) },query:{type_name:this.$route.query.type_name}})
 
 
 

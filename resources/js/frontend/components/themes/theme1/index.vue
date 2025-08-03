@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center breaking-news bg-white"
                         style="border: 1px solid #14142B;">
-                        <div class="bg-info d-flex flex-fill flex-grow-1 flex-row justify-content-center nav-item-color news px-1 py-2"
+                        <div class="d-flex flex-row flex-grow-1 flex-fill justify-content-center  py-2 text-white px-1 news"
                             style="background-color: #14142B;">
                             <span class="d-flex align-items-center">&nbsp;নোটিশ</span>
                         </div>
@@ -29,6 +29,8 @@
             </div>
         </div>
 
+
+        <GoogleAd />
 
 
         <div class="bg-white container d-flex justify-content-between my-5 py-4 gap-2">
@@ -51,7 +53,7 @@
 
         </div>
 
-
+        <GoogleAd ad-slot="7185137326"/>
 
         <!-- slider & notice -->
 
@@ -77,6 +79,12 @@
 
             </div>
         </div>
+
+
+        <GoogleAd ad-slot="1533355390"/>
+
+
+
         <!-- quotes section-->
         <div class="container d-flex gap-4 my-3  py-3 d-flex-res p-0">
             <div class="bg-white d-flex res-quates shadow w-50">
@@ -103,6 +111,10 @@
                 </p>
             </div>
         </div>
+
+        <GoogleAd ad-slot="9651518566"/>
+
+
         <!-- history of the school -->
         <div class="container mx-auto d-flex fs-5  py-4 row">
             <div class="col-lg-5 col-md-12 text-center">
@@ -120,11 +132,14 @@
                 font-weight: 500;"> {{  schoolSettings.HISTORY_OF_THE_ORGANIZATION }}
 
                 </p>
-                <a href="#" class="text-white p-2 px-3"
-                    style="box-shadow: 3px 4px 0px 0px #1564ad; background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%); background-color:#79bbff; border-radius:5px; border:1px solid #337bc4; display:inline-block; cursor:pointer; font-weight:bold;  text-decoration:none; text-shadow:0px 1px 0px #528ecc;"><i
-                        class="fa-book-open fa-solid me-2"></i>বিস্তারিত পড়ুন</a>
+                <a class="px-4 py-1 read-more text-white" href="#" role="button"><i
+                        class="fa-book-open fa-solid me-2"></i>আরো পড়ুন</a>
             </div>
         </div>
+
+        <GoogleAd ad-slot="5281028714"/>
+
+
         <!-- image and videos gallery -->
 
         <!-- <div class="bg-white container mx-auto px-1 py-4 row shadow">
@@ -211,6 +226,8 @@ import {
 
 let FlipCard = require(`../../layouts/theme1/FlipCard.vue`)
 
+import GoogleAd from "../../GoogleAd.vue";
+
 export default {
     created() {
 
@@ -227,6 +244,7 @@ export default {
         FluxPagination,
         FluxPreloader,
         FlipCard,
+        GoogleAd
     },
     data() {
         return {

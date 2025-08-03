@@ -47,7 +47,7 @@ export default {
             if(name=='Half_yearly_examination'){
                 return 'অর্ধ বার্ষিক পরীক্ষার ফি';
             }else if(name=='Half_yearly_evaluation'){
-                return 'অর্ধ বার্ষিক মূল্যায়ন ফি';
+                return 'ষাষ্মাসিক মূল্যায়ন ফি';
             }else if(name=='Annual Examination'){
                 return 'বার্ষিক পরীক্ষার ফি';
             }else if(name=='Annual_Examination'){
@@ -271,7 +271,7 @@ export default {
                 str = "orthoniti";
             } else if (str == 'বাংলাদেশ ও বিশ্ব সভ্যতার ইতিহাস') {
                 str = "itihas";
-            } else if (str == 'বাংলাদেশ ও বিশ্ব পরিচয়') {
+            } else if (str == 'ইতিহাস ও সামাজিক বিজ্ঞান') {
                 str = "B_and_B";
             } else if (str == 'ধর্ম ও নৈতিক শিক্ষা') {
                 str = "Religion";
@@ -285,9 +285,9 @@ export default {
                 str = "Higher_Mathematics";
             } else if (str == 'তথ্য ও যোগাযোগ প্রযুক্তি') {
                 str = "ICT";
-            } else if (str == 'শারীরিক শিক্ষা ও স্বাস্থ্য') {
+            } else if (str == 'শারিরীক শিক্ষা ও স্বাস্থ্য') {
                 str = "Physical_Education_and_Health";
-            } else if (str == 'চারু ও কারুকলা') {
+            } else if (str == 'শিল্প ও সংস্কৃতি') {
                 str = "Arts_and_Crafts";
             } else if (str == 'কর্ম ও জীবনমুখী শিক্ষা') {
                 str = "Work_and_life_oriented_education";
@@ -310,11 +310,11 @@ export default {
             //         "ভূগোল":"vugol",
             //         "অর্থনীতি":"orthoniti",
             //         "ইতিহাস":"itihas",
-            //         "বাংলাদেশ ও বিশ্ব পরিচয়":"B_and_B",
+            //         "ইতিহাস ও সামাজিক বিজ্ঞান":"B_and_B",
             //         "ধর্ম":"Religion",
             //         "ইসলাম-ধর্ম":"ReligionIslam",
             //         "হিন্দু-ধর্ম":"ReligionHindu",
-            //         "কৃষি":"Agriculture",
+            //         "কৃষি শিক্ষা":"Agriculture",
             //         "তথ্য ও যোগাযোগ প্রযুক্তি":"ICT",
             // }
             //     for (var x in banglaNumber) {
@@ -381,7 +381,7 @@ export default {
             } else if (str == 'itihas') {
                 str = "বাংলাদেশ ও বিশ্ব সভ্যতার ইতিহাস";
             } else if (str == 'B_and_B') {
-                str = "বাংলাদেশ ও বিশ্ব পরিচয়";
+                str = "ইতিহাস ও সামাজিক বিজ্ঞান";
             } else if (str == 'Religion') {
                 str = "ধর্ম ও নৈতিক শিক্ষা";
             } else if (str == 'ReligionIslam') {
@@ -395,9 +395,9 @@ export default {
             } else if (str == 'ICT') {
                 str = "তথ্য ও যোগাযোগ প্রযুক্তি";
             } else if (str == 'Physical_Education_and_Health') {
-                str = "শারীরিক শিক্ষা ও স্বাস্থ্য";
+                str = "শারিরীক শিক্ষা ও স্বাস্থ্য";
             } else if (str == 'Arts_and_Crafts') {
-                str = "চারু ও কারুকলা";
+                str = "শিল্প ও সংস্কৃতি";
             } else if (str == 'Work_and_life_oriented_education') {
                 str = "কর্ম ও জীবনমুখী শিক্ষা";
             } else if (str == 'Career_Education') {
@@ -421,11 +421,11 @@ export default {
             //     "vugol": "ভূগোল",
             //     "orthoniti": "অর্থনীতি",
             //     "itihas": "ইতিহাস",
-            //     "B_and_B": "বাংলাদেশ ও বিশ্ব পরিচয়",
+            //     "B_and_B": "ইতিহাস ও সামাজিক বিজ্ঞান",
             //     "Religion": "ধর্ম",
             //     "ReligionIslam": "ইসলাম-ধর্ম",
             //     "ReligionHindu": "হিন্দু-ধর্ম",
-            //     "Agriculture": "কৃষি",
+            //     "Agriculture": "কৃষি শিক্ষা",
             //     "ICT": "তথ্য ও যোগাযোগ প্রযুক্তি"
             // }
             // for (var x in banglaNumber) {

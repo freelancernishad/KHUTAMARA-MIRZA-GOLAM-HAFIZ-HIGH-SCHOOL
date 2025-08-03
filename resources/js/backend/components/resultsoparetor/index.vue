@@ -159,6 +159,7 @@ export default {
 	methods: {
           async filter(){
 
+
             var res = await this.callApi('post',`/api/resultlogCount`,this.filterdata);
 
             if(res.data){
@@ -191,15 +192,22 @@ export default {
 
 
         callSubjects(){
-            if(this.filterdata.student_class=='Ten'){
-                var result =  this.exams.filter(exam => exam == 'Pre_selection_examination' );
-                this.filterdata.examType = 'Pre_selection_examination'
-            }else{
-                var result =  this.exams.filter(exam => exam == 'Half_yearly_examination' );
-                this.filterdata.examType = 'Half_yearly_examination'
-            }
 
-            this.exam_names = result;
+
+            // console.log(this.exams);
+            this.exam_names = this.exams
+
+
+            // if(this.filterdata.student_class=='Six' || this.filterdata.student_class=='Seven' || this.filterdata.student_class=='Eight' || this.filterdata.student_class=='Nine'){
+            //     var result =  this.exams.filter(exam => exam == 'Annual Examination' );
+            //     this.filterdata.examType = 'Annual Examination'
+            // }else{
+            //     var result =  this.exams.filter(exam => exam == 'Selective_Exam' );
+            //     this.filterdata.examType = 'Selective_Exam'
+            // }
+
+            // this.exam_names = result;
+
 
 
             if(this.filterdata.student_class=='Nine' || this.filterdata.student_class=='Ten'){

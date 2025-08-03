@@ -116,21 +116,6 @@
                     </div>
                     </div>
 
-                <div class="col-md-4 mt-3" v-else  >
-                    <div class="form-group">
-                        <label class="form_label">শাখা</label>
-                        <select class="form-control" style="width: 100%;" v-model="form.section" @change="checkRoll"  >
-                            <option value="">নির্বাচন করুন</option>
-                            <option>A</option>
-                            <option>B</option>
-                        </select>
-
-                    </div>
-                    </div>
-
-
-
-
                 <div class="col-md-4 mt-3" v-if="form.StudentClass=='Nine' || form.StudentClass=='Ten'" id="Sgsroup" >
                     <div class="form-group">
                         <label class="form_label">চতুর্থ বিষয়</label>
@@ -687,7 +672,7 @@
                             </option>
                             <option>ব্যবসায়ি</option>
                             <option>কৃষক</option>
-                            <option>কৃষি শ্রমিক</option>
+                            <option>জীবন ও জীবিকা শ্রমিক</option>
                             <option>ডাক্তার</option>
                             <option>জেলে</option>
                             <option>সরকারি চাকুরি</option>
@@ -797,7 +782,6 @@ export default {
             bigBroSisGroup:'Humanities',
             StudentSubject:'Agriculture',
             bigBroSisRoll:null,
-            section:'A',
             StudentGroup:'Humanities',
             StudentAddress:null,
             division:null,
@@ -903,7 +887,7 @@ console.log(event.target.result)
         // }else{
         //     this.form.StudentGroup = '';
         // }
-        var res = await this.callApi('get',`/api/check/student/roll?StudentRoll=${this.form.StudentRoll}&StudentClass=${this.form.StudentClass}&StudentGroup=${this.form.StudentGroup}&section=${this.form.section}`,[]);
+        var res = await this.callApi('get',`/api/check/student/roll?StudentRoll=${this.form.StudentRoll}&StudentClass=${this.form.StudentClass}&StudentGroup=${this.form.StudentGroup}`,[]);
         this.alredyhave = res.data;
 
     }

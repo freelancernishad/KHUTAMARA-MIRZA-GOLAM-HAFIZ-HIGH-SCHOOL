@@ -16,7 +16,6 @@ class student extends Model
         'AdmissionID',
         'StudentID',
         'StudentRoll',
-        'section',
         'sscroll',
         'StudentClass',
         'StudentGender',
@@ -72,13 +71,29 @@ class student extends Model
         'StudentTranferStatus',
         'AplicationStatus',
         'ThisMonthPaymentStatus',
+        'StudentBirthC',
+        'fatherNidF',
+        'fatherNidB',
+        'motherNidF',
+        'motherNidB',
 
 
 
     ];
 
+    public function assessments()
+    {
+        return $this->hasMany(AssessmentRecord::class);
+    }
 
     public function Payments(){
         return $this->belongsTo(payment::class, 'StudentID', 'studentId');
     }
+
+
+    public function paymentform()
+        {
+            return $this->hasMany(payment::class, 'AdmissionID', 'AdmissionID');
+        }
+
 }

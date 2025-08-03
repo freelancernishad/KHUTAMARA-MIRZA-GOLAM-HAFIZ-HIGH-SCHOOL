@@ -76,7 +76,7 @@ class staffsController extends Controller
             if($datatype=='count'){
                 $result= $datas->count();
             }else{
-                $result= $datas->orderBy('TeacherJoiningDate','DESC')->paginate(30);
+                $result= $datas->orderBy('TeacherJoiningDate','DESC')->paginate(20);
             }
 
 

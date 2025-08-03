@@ -60,6 +60,45 @@ Route::get('genrate-sitemap', function () {
     // this will generate file mysitemap.xml to your public folder
     return redirect(url('sitemap.xml'));
 });
+
+Route::get('/sent/ekpay/ip', function () {
+
+
+
+$curl = curl_init();
+
+ $apiUrl = 'https://tepriganjhighschool.edu.bd/get/ekpay/ip';
+curl_setopt_array($curl, array(
+  CURLOPT_URL => $apiUrl,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+});
+
+Route::get('/get/ekpay/ip', function () {
+
+    Log::info($_SERVER['REMOTE_ADDR']);
+    return $_SERVER['REMOTE_ADDR'];
+
+});
+
+
+
+
+
+
+
 Route::get('/smstest', function () {
     $details = [
         'title' => 'Mail from ItSolutionStuff.com',
@@ -200,6 +239,7 @@ Route::get('pdfgen', function () {
 });
 
 
+
 Route::get('student/applicant/copy/{applicant_id}', [studentsController::class, 'applicant_copy']);
 Route::get('student/applicant/invoice/{trxid}', [studentsController::class, 'applicant_invoice']);
 Route::get('/student/exam/admit/{admissionId}/{ex_name}', [studentsController::class, 'exam_admit']);
@@ -277,8 +317,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
         $veiwType = $request->veiwType;
         // $filter['status'] = 'Published';
         if($veiwType=='noticePdf'){
+            if($student_class=='Six' || $student_class=='Seven'){
 
-            $results = StudentResult::where($filter)->where('FinalResultStutus','!=','inhaled')->where('GPA','!=','F')->orderBy('failed', 'asc')->orderBy('total', 'desc')->get();
+                $results = StudentResult::where($filter)->where('FinalResultStutus','!=','inhaled')->orderBy('failed', 'asc')->orderBy('total', 'desc')->get();
+            }else{
+
+                $results = StudentResult::where($filter)->where('FinalResultStutus','!=','inhaled')->where('GPA','!=','F')->orderBy('failed', 'asc')->orderBy('total', 'desc')->get();
+            }
+
+
         }else{
             $results = StudentResult::where($filter)->orderBy('failed', 'asc')->orderBy('total', 'desc')->get();
 
@@ -292,11 +339,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
          if($veiwType=='noticePdf'){
 
 
-            return PdfMaker('A4',$school_id,view('admin/pdfReports.promotionResult',compact('results','pdfFileName','veiwType','schoolDetails')),$pdfFileName);
+            return PdfMaker('A4',$school_id,view('admin/pdfReports.promotionResult',compact('results','pdfFileName','veiwType','schoolDetails','school_id')),$pdfFileName);
 
 
          }elseif($veiwType=='schoolPdf'){
-            return PdfMaker('A4',$school_id,view('admin/pdfReports.promotionResult',compact('results','pdfFileName','veiwType','schoolDetails')),$pdfFileName);
+            return PdfMaker('A4',$school_id,view('admin/pdfReports.promotionResult',compact('results','pdfFileName','veiwType','schoolDetails','school_id')),$pdfFileName);
          }else{
              return view('resultpublish', compact('results','filter','schoolDetails'));
 
@@ -354,16 +401,20 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     Route::get('download/student/reports', [frontendController::class, 'student_at_a_glance']);
 
+    Route::get('/get/form/fillup/students',[studentsController::class , 'formfillupstudentsPdf']);
+
+
 
     Route::get('/result_sheet/pdf/{school_id}/{group}/{class}/{exam}/All/{date}', [resultController::class, 'resultViewpdf']);
     Route::get('/student_list/pdf/{year}/{class}/{school_id}', [studentsController::class, 'student_list_pdf']);
+    Route::get('/student_list_stipend/pdf/{year}/{class}/{school_id}', [studentsController::class, 'student_list_stipend_pdf']);
     Route::get('/{vue_capture?}', function () {
         // return   Auth::user()->roles->permission;
         //   Auth::user()->roles;
         $roles = Role::all();
         $classess = json_encode(['Six', 'Seven', 'Eight', 'Nine', 'Ten']);
 
-        $school_id = '125994';
+        $school_id = '125983';
         $school_detials = school_detail::where("school_id", "$school_id")->first();
         $school_detials['slider'] =  json_decode($school_detials->slider);
 
@@ -388,7 +439,7 @@ Route::get('/{vue_capture?}', function () {
             setCookie('getschoolid', myItem, 7);
     </script>
     ";
-    $school_id = '125994';
+    $school_id = '125983';
     // if (isset($_COOKIE["getschoolid"])) {
         //     $school_id = htmlspecialchars($_COOKIE["getschoolid"]);
         // }

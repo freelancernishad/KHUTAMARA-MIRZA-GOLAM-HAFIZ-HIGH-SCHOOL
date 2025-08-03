@@ -82,14 +82,8 @@ class TCController extends Controller
                 $random = Str::random(40);
                 $tcData['token'] = $random;
                 // $tcData['academic_year'] = '2021-2022';
-
-                $tcData['status'] = 'active';
-                $tcData['paymentStatus'] = 'Paid';
-
-                // $tcData['status'] = 'Pending';
-                // $tcData['paymentStatus'] = 'Unpaid';
-
-
+                $tcData['status'] = 'Pending';
+                $tcData['paymentStatus'] = 'Unpaid';
                 $tcData['sl'] = $this->tcSL();
 
 
@@ -98,7 +92,6 @@ class TCController extends Controller
 
 
 
-            return url("/student/tc/$tc->token");
 
 
 
@@ -116,8 +109,6 @@ class TCController extends Controller
                 'StudentAddress'=>$request->StudentAddress,
             ];
             $student->update($studentUpdateData);
-
-
 
 
 
@@ -174,9 +165,7 @@ class TCController extends Controller
         ];
         $Insertdata['month'] =  date('F');
         payment::create($Insertdata);
-
         return $redirectutl;
-
         return redirect($redirectutl);
 
     }
@@ -227,7 +216,7 @@ class TCController extends Controller
 
 
 
-              $qrcode = "<img src='https://chart.apis.google.com/chart?cht=qr&chl=$qrurl&chs=130'/>";
+              $qrcode = "<img src='https://api.qrserver.com/v1/create-qr-code/?data=$qrurl&size=100x100'/>";
 
 
 
@@ -251,6 +240,18 @@ class TCController extends Controller
                 $groupName = 'মানবিক';
             }else if($group=='Science'){
                 $groupName = 'বিজ্ঞান';
+            }
+
+
+
+            $group = $tc->student_type;
+            $typeName = 'নিয়মিত';
+            if($group=='regular'){
+                $typeName = 'নিয়মিত';
+            }elseif($group=='quality_improvement'){
+                $typeName = 'মানউন্নয়ন';
+            }else{
+                $typeName = 'অনিয়মিত';
             }
 
 
@@ -393,15 +394,14 @@ class TCController extends Controller
     <div style='line-height: 30px; font-size:25px;text-align:justify'>
         <div>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; এই মর্মে প্রত্যয়ন করা যাইতেছে যে - $tc->name,
-            পিতা - $tc->fatherName, মাতা - $tc->motherName, গ্রাম - $tc->StudentAddress, ডাকঘর - $tc->post_office, উপজেলা - $tc->upazila, জেলা - $tc->district । সে অত্র বিদ্যালয়ের ".int_en_to_bn($tc->academic_year)." শিক্ষাবর্ষের একজন নিয়মিত শিক্ষার্থী ছিল এবং মাধ্যমিক ও উচ্চ মাধ্যমিক শিক্ষা বোর্ড, দিনাজপুর কর্তৃক গৃহীত ".int_en_to_bn($tc->year)."ইং সালের মাধ্যমিক স্কুল সার্টিফিকেট পরীক্ষায় $groupName বিভাগ হইতে <span style='font-size:14px'>GPA</span> ".int_en_to_bn($tc->sscGpa)." অর্জন করিয়া কৃতকার্য হইয়াছে। উক্ত পরীক্ষায় তাহার রোল নম্বর - ".int_en_to_bn($tc->sscRoll).", রেজিষ্ট্রেশন নং - ".int_en_to_bn($tc->sscReg)." এবং জন্ম তারিখ - $dateOfBirth (কথায়) $dateOfBirth_date $dateOfBirth_month $dateOfBirth_year ।
+            পিতা - $tc->fatherName, মাতা - $tc->motherName, গ্রাম - $tc->StudentAddress, ডাকঘর - $tc->post_office, উপজেলা - $tc->upazila, জেলা - $tc->district । সে অত্র বিদ্যালয়ের ".int_en_to_bn($tc->academic_year)." শিক্ষাবর্ষের একজন $typeName শিক্ষার্থী ছিল এবং মাধ্যমিক ও উচ্চ মাধ্যমিক শিক্ষা বোর্ড, দিনাজপুর কর্তৃক গৃহীত ".int_en_to_bn($tc->year)."ইং সালের মাধ্যমিক স্কুল সার্টিফিকেট পরীক্ষায় $groupName বিভাগ হইতে <span style='font-size:14px'>GPA</span> ".int_en_to_bn($tc->sscGpa)." অর্জন করিয়া কৃতকার্য হইয়াছে। উক্ত পরীক্ষায় তাহার রোল নম্বর - ".int_en_to_bn($tc->sscRoll).", রেজিষ্ট্রেশন নং - ".int_en_to_bn($tc->sscReg)." এবং জন্ম তারিখ - $dateOfBirth (কথায়) $dateOfBirth_date $dateOfBirth_month $dateOfBirth_year ।
         </div>
         <div style='margin-top: 15px;'>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; আমার জানামতে সে উন্নত চরিত্রের অধিকারী এবং অত্র প্রতিষ্ঠানে অধ্যয়নকালে রাষ্ট্র বা শৃঙ্খলা পরিপন্থী কার্যকলাপে জড়িত ছিল না। <br />
-            <div style='margin-top: 10px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;আমি তাহার সর্বাঙ্গীন উন্নতি ও মঙ্গল  কামনা করিতেছি।            </div>
+            <div style='margin-top: 10px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;আমি তাহার সর্বাঙ্গীন উন্নতি কামনা করি।  </div>
         </div>
     </div>
 </main>
-
 
 
 

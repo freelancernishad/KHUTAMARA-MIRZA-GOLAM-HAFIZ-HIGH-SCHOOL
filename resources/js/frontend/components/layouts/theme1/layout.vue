@@ -4,7 +4,7 @@
 
 
     <header class="container">
-        <div class="align-items-center bg-info d-flex justify-content-between px-3 py-2"
+        <div class="align-items-center d-flex justify-content-between px-3 py-2 text-white "
             style="background: #14142B;">
             <p class="mb-0 f13">EIIN : {{ schoolSettings.SCHOLL_CODE }},<span class="contact-info"> MPO CODE : 7903061301 </span></p>
             <div class="f13">
@@ -19,27 +19,22 @@
 
 
         </div>
-
-
-
-        <div class="align-items-center d-flex gap-4 justify-content-center py-3" style="grid-gap: 1em;">
+        <div class="align-items-center d-flex p-3 " style="grid-gap:10px;">
             <div>
-                <img draggable="false" class="img-fluid" :src="$asseturl+schoolSettings.logo"
-                    alt="" style="width: 116px">
+                <img draggable="false" class="img-fluid" :src="$asseturl+schoolSettings.logo" alt="" style="width: 100px;">
             </div>
             <div>
-                <h2 class="fw-bold text-center  name" style="font-size: 25px;color: var(--my-new-color);"> {{ schoolSettings.SCHOLL_NAME }}</h2>
-                <p class="text-center fw-bold f13 mb-1" style="font-size: 20px;color: var(--my-blue-color);"> {{ schoolSettings.SCHOLL_ADDRESS }}, স্থাপিতঃ {{ schoolSettings.SCHOLL_BUILD }}</p>
+                <h2 class="fw-bold text-left text-dark name" style="font-size: 25px;    border-bottom: 1px solid #271054;">{{ schoolSettings.SCHOLL_NAME }}</h2>
+                <p class="text-left fw-bold f13" style="color: var(--my-blue-color);font-size: 16px;">TEPRIGANJ ADARSHA BL HIGH SCHOOL</p>
             </div>
-
+            <div class="contact-info">
+                <!-- <p class="fw-bold mb-0 text-danger">মোবাইলঃ০১৭১৯৪২১৬০৯</p>
+                <p class="fw-bold mb-0 text-danger"> Email: tepablhs65@gmail.com</p> -->
+            </div>
 
         </div>
-
-
-
         <!-- nav -->
-        <nav class="bg-info navbar navbar-expand-lg navbar-light py-1 text-light"
-            style=" background-color: var(--main-color);">
+        <nav class="navbar navbar-expand-lg navbar-light text-light" style=" background-color: #141441 !important;">
             <div class="container-fluid"><button type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span
@@ -101,9 +96,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="imbox">
-                        <div class="sidebarTitle mb-3 defaltColor">
-                                    <h4 class="bg-info fs-5 py-1 text-center">গুরুত্বপূর্ণ লিংক</h4>
-                        </div>
+                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">গুরুত্বপূর্ণ লিংক</h4></div>
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
 
 
@@ -131,10 +124,7 @@
             </div>
             <div class="col-md-4">
                 <div class="imbox">
-                        <div class="sidebarTitle mb-3 defaltColor">
-                            <h4 class="bg-info fs-5 py-1 text-center">অন্যান্য</h4>
-                        </div>
-
+                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">অন্যান্য</h4></div>
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
 
                         <li><a  href="https://bangladesh.gov.bd/index.php" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; জাতীয় তথ্য বাতায়ন</a></li>
@@ -146,7 +136,7 @@
 
                         <li><a  href="http://debiganj.panchagarh.gov.bd/" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; দেবীগঞ্জ উপজেলা</a></li>
 
-
+                        <li><a  href="https://tepriganj.uniontax.gov.bd/" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; টেপ্রীগঞ্জ ইউনিয়ন</a></li>
 
 
 
@@ -155,9 +145,7 @@
             </div>
             <div class="col-md-4">
                 <div class="imbox">
-                        <div class="sidebarTitle mb-3 defaltColor">
-                                <h4 class="bg-info fs-5 py-1 text-center">শিক্ষাবোর্ড</h4>
-                        </div>
+                    <div class="sidebarTitle mb-3 defaltColor"><h4 class="text-center">শিক্ষাবোর্ড</h4></div>
                     <ul class="list-unstyled importantLInk" style="padding: 0px 11px;">
                         <li><a  href="https://dhakaeducationboard.gov.bd/" target="_blank"> <i class="fas fa-check-circle"></i> &nbsp; ঢাকা শিক্ষাবোর্ড</a></li>
 
@@ -192,16 +180,16 @@
             <img draggable="false" :src="$asseturl+'assets/img/footer_top_bg.png'" alt="footer_top_bg" class="img-fluid w-100">
         </div>
 
-        <div class="bg-info">
+        <div style="background: #14142B">
 
             <div class="row text-center">
 
 
                 <div class="col-md-6 col-lg-4">
                     <p class="fs-5 mb-0  mt-2">পরিকল্পনা ও বাস্তবায়নে: </p>
-                    <p class="mb-0  mt-1">পরিমল চন্দ্র রায় <br>
-                        01792948280 <br>
-                        </p>
+                    <p class="mb-0  mt-1">মোঃ আবু ফরহাদ <br>
+                        সহকারী শিক্ষক <br>
+                        {{ schoolSettings.SCHOLL_NAME }}</p>
                 </div>
 
 
@@ -223,8 +211,6 @@
         </div>
 
     </footer>
-
-
 
 
 
@@ -310,28 +296,22 @@ ul.footerList li a:hover {
     text-decoration: none!important;
 }
 
+
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap");
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500&display=swap");
 
 :root {
-  --my-blue-color: #5d7d69;
-  --my-new-color: #2e3192;
+  --my-blue-color: #2e3192;
   --main-color: #14142b;
 }
 
-.nav-item-color {
-  color: #14142b;
-}
-
-
-
 .num {
-  font-family: "Noto Sans Bengali", sans-serif;
+  /* font-family: "Noto Sans Bengali", sans-serif; */
 }
 
 * {
-  font-family: "Hind Siliguri", sans-serif;
+  /* font-family: "Hind Siliguri", sans-serif; */
   padding: 0;
 }
 
@@ -341,7 +321,7 @@ li.nav-item {
 
 /*  */
 body {
-  background: #dfdfdf;
+  background: #e0e4cc;
 }
 
 .news {
@@ -379,11 +359,12 @@ h2 {
 }
 
 .quoates-logo {
-  max-width: 100px;
-  border-style: solid;
-  border-color: #2e3192;
-  border-width: 5px;
-  border-radius: 50px;
+    max-width: 160px;
+    border-style: solid;
+    border-color: #2e3192;
+    border-width: 2px;
+    border-radius: 50px;
+    height: 160px;
 }
 
 .quoates-name {
@@ -402,7 +383,6 @@ h2 {
 .read-more {
   background: #180092;
 }
-
 .read-more:hover {
   background: #2303c7;
   color: rgb(230, 224, 224);
@@ -541,12 +521,10 @@ h2 {
   .contact-info {
     display: none !important;
   }
-
   .teachers-container {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
   }
-
   .sorting_disabled {
     font-size: 12px;
   }

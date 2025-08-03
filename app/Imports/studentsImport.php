@@ -18,13 +18,13 @@ class studentsImport implements ToCollection
 
 
 
-    //     $AdmissionID = (string)$this->StudentAdmissionId('','125983');
+    //     $AdmissionID = (string)$this->StudentAdmissionId('','125994');
 
-    //     $StudentID = (string)$this->StudentId($row[1],$row[0],'125983',$row[2]);
+    //     $StudentID = (string)$this->StudentId($row[1],$row[0],'125994',$row[2]);
 
 
     //     return new student([
-    //         'school_id '=>'125983',
+    //         'school_id '=>'125994',
     //         'StudentID'=>$StudentID,
     //         'AdmissionID'=>$AdmissionID,
     //         'Year'=>date('Y'),

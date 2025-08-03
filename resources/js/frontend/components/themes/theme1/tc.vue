@@ -72,6 +72,8 @@
                                         <option>2021</option>
                                         <option>2022</option>
                                         <option>2023</option>
+                                        <option>2024</option>
+                                        <option>2025</option>
                                     </select>
                                 </div>
                             </div>
@@ -86,6 +88,22 @@
                                         <option>2019-2020</option>
                                         <option>2020-2021</option>
                                         <option>2021-2022</option>
+                                        <option>2022-2023</option>
+                                        <option>2023-2024</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="form_label">ছাত্র/ছাত্রীর ধরণ </label>
+
+                                    <select v-model="f.student_type" class="form-control" required>
+                                        <option value="">নির্বাচন করুন</option>
+                                        <option value="regular">নিয়মিত</option>
+                                        <option  value="iregular">অনিয়মিত</option>
+                                        <option  value="quality_improvement">মানউন্নয়ন</option>
                                     </select>
 
                                 </div>
@@ -248,7 +266,7 @@ export default {
                 student_class: 'Ten',
                 StudentGroup: 'Humanities',
                 StudentRoll: '',
-                year: '2022',
+                year: '2023',
             },
             f:{
                 studentId:'',
@@ -257,6 +275,7 @@ export default {
                 roll:'',
                 year:'',
                 academic_year:'',
+                student_type:'',
                 sscRoll:'',
                 sscReg:'',
                 sscGpa:'',
@@ -327,10 +346,7 @@ export default {
 
                 this.searched = 1
             }else if(res.status==422){
-                Notification.customError2('এই প্রশংসা পত্রটি একবার নেওয়া হয়েছে । প্রশংসা পত্রটি আবার প্রয়োজন হলে বিদ্যালয়ে যোগাযোগ করুন');
-
-                // Notification.customError2('এই প্রশংসা পত্রটির জন্য একবার পেমেন্ট করা হয়েছে এবং নেওয়া হয়েছে । প্রশংসা পত্রটি আবার প্রয়োজন হলে বিদ্যালয়ে যোগাযোগ করুন');
-
+                Notification.customError2('এই প্রশংসা পত্রটির জন্য একবার পেমেন্ট করা হয়েছে এবং নেওয়া হয়েছে । প্রশংসা পত্রটি আবার প্রয়োজন হলে বিদ্যালয়ে যোগাযোগ করুন');
                 this.searched = 0
             }else{
                 Notification.customError2('কোনো তথ্য খুঁজে পাওয়া যায় নি!');

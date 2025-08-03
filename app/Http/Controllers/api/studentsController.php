@@ -25,6 +25,12 @@ use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 class studentsController extends Controller
 {
 
+    function addAnotherSchoolData(Request $request) {
+        $datas = $request->all();
+        $datas['StudentRoll'] = time();
+
+       return $created = student::create($datas);
+    }
 
     public function listforGroup(Request $request)
     {
@@ -73,13 +79,13 @@ class studentsController extends Controller
                 }else{
                     $newRoll = '1';
                 }
-                $StudentID = StudentId("A",$student->StudentClass, $newRoll,$student->school_id,$group,date("y", strtotime('01-01-'.$paymentYear)));
+                $StudentID = StudentId($student->StudentClass, $newRoll,$student->school_id,$group,date("y", strtotime('01-01-'.$paymentYear)));
 
                 $student->update(['StudentRoll' => $newRoll,'StudentID' => $StudentID,'Year' => $paymentYear,'StudentStatus' => 'active']);
 
                 $StudentPhoneNumber =  int_bn_to_en($student->StudentPhoneNumber);
 
-                smsSend(strtoupper($student->StudentName)." এর ".class_en_to_bn($student->StudentClass)."তে ভর্তি নিশ্চিত হয়েছে। রোল ".int_en_to_bn($student->StudentRoll), $StudentPhoneNumber);
+                SmsNocSmsSend(strtoupper($student->StudentName)." এর ".class_en_to_bn($student->StudentClass)."তে ভর্তি নিশ্চিত হয়েছে। রোল ".int_en_to_bn($student->StudentRoll), $StudentPhoneNumber);
 
                 return $student;
 
@@ -160,7 +166,9 @@ class studentsController extends Controller
 
         //    echo  "Congratulations ".strtoupper($student->StudentNameEn).", Your admission application has been accepted. Contact the school with required documents by 29-12-2022 to confirm admission. Head Master,Tepriganj High School";
 
-            smsSend("Congratulations ".strtoupper($student->StudentNameEn).", Your admission application has been accepted. Contact the school with required documents by 29-12-2022 to confirm admission. Head Master,Tepriganj Adarsha B.L High School", $StudentPhoneNumber);
+            SmsNocSmsSend("অভিনন্দন $student->StudentName,ভর্তি নিশ্চিত করতে ০৫-০১-২০২৫ এর মধ্যে প্রয়োজনীয় কাগজপত্র ও ভর্তি ফি নিয়ে বিদ্যালয়ে যোগাযোগ করুন", $StudentPhoneNumber);
+
+            // SmsNocSmsSend("Congratulations ".strtoupper($student->StudentNameEn).", Your admission application has been accepted. Contact the school with required documents by 29-12-2022 to confirm admission. Head Master,Tepriganj Adarsha B.L High School", $StudentPhoneNumber);
 
 
             // smsSend('অভিনন্দন, আপনার ভর্তির আবেদনটি গ্রহন করা হয়েছে। ভর্তি নিশ্চিত করতে 29-12-2022 এর মধ্যে প্রয়োজনীয় কাগজপত্র নিয়ে বিদ্যালয়ে যোগাযোগ করুন', $StudentPhoneNumber);
@@ -241,8 +249,8 @@ class studentsController extends Controller
         foreach ($rows[0] as $key => $row) {
 
 
-            $school_id = '125983';
-            // $student =  student::where(['school_id'=>'125983'])->latest()->first();
+            $school_id = '125994';
+            // $student =  student::where(['school_id'=>'125994'])->latest()->first();
             // $admition_id = $student->AdmissionID;
 
 
@@ -272,7 +280,7 @@ class studentsController extends Controller
             $AdmissionID = (string)$admition_ID;
 
 
-            $StudentID = (string)StudentId("A",$row[1],$row[0],$school_id,$row[2]);
+            $StudentID = (string)StudentId($row[1],$row[0],$school_id,$row[2]);
 
 
             student::create([
@@ -444,14 +452,14 @@ die();
             $admition_id = $row[0]->AdmissionID;
             $roll = $row[0]->StudentRoll + 1;
             $admition_ID = (string)StudentAdmissionId($admition_id,$school_id);
-            $StudentID = StudentId("A",$class, $roll,$school_id);
+            $StudentID = StudentId($class, $roll,$school_id);
             $data = ['admition_ID' => $admition_ID, 'StudentID' => $StudentID, 'StudentRoll' => $row[0]->StudentRoll + 1];
         } else {
             $one = "0001";
             $year = date("dmy");
             $admition_ID = $school_id . $year . $one;
             ////////////////////////////////
-            $StudentID = StudentId("A",$class, "1",$school_id);
+            $StudentID = StudentId($class, "1",$school_id);
             $data = ['admition_ID' => $admition_ID, 'StudentID' => $StudentID, 'StudentRoll' => '1'];
         }
         return response()->json($data);
@@ -464,13 +472,12 @@ die();
        $StudentRoll = $request->StudentRoll;
        $StudentClass = $request->StudentClass;
        $StudentGroup = $request->StudentGroup;
-       $section = $request->section;
        $year = date('Y');
        if($bigsis){
 
-           return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->first();
+           return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->first();
        }
-       return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->count();
+       return student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->count();
 
 
     }
@@ -519,9 +526,8 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
             $StudentRoll = $r->StudentRoll;
             $year = date('Y');
             $StudentGroup = $r->StudentGroup;
-            $section = $r->section;
 // return StudentId($StudentClass,$StudentRoll,$school_id,$StudentGroup);
-            $studentcount =  student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'section'=>$section,'year'=>$year])->count();
+            $studentcount =  student::where(['StudentRoll'=>$StudentRoll,'StudentClass'=>$StudentClass,'StudentGroup'=>$StudentGroup,'year'=>$year])->count();
 
             if ($id == '') {
             if($studentcount>0){
@@ -532,7 +538,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                 return $resp;
             }
             }
-                $data['StudentID'] = (string)StudentId($section,$StudentClass,$StudentRoll,$school_id,$StudentGroup);
+                $data['StudentID'] = (string)StudentId($StudentClass,$StudentRoll,$school_id,$StudentGroup);
             }
 
             $AdmissionID = (string)StudentAdmissionId('',$school_id);
@@ -543,6 +549,36 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
         $imageCount =  count(explode(';', $r->StudentPicture));
         if ($imageCount > 1) {
             $data['StudentPicture'] =  fileupload($r->StudentPicture, 'backend/students/',300,300);
+        }
+
+
+        $StudentBirthCCount =  count(explode(';', $r->StudentBirthC));
+        if ($StudentBirthCCount > 1) {
+            $data['StudentBirthC'] =  fileupload($r->StudentBirthC, 'backend/students/');
+        }
+
+
+        $fatherNidFCount =  count(explode(';', $r->fatherNidF));
+        if ($fatherNidFCount > 1) {
+            $data['fatherNidF'] =  fileupload($r->fatherNidF, 'backend/students/');
+        }
+
+
+        $fatherNidBCount =  count(explode(';', $r->fatherNidB));
+        if ($fatherNidBCount > 1) {
+            $data['fatherNidB'] =  fileupload($r->fatherNidB, 'backend/students/');
+        }
+
+
+        $motherNidFCount =  count(explode(';', $r->motherNidF));
+        if ($motherNidFCount > 1) {
+            $data['motherNidF'] =  fileupload($r->motherNidF, 'backend/students/');
+        }
+
+
+        $motherNidBCount =  count(explode(';', $r->motherNidB));
+        if ($motherNidBCount > 1) {
+            $data['motherNidB'] =  fileupload($r->motherNidB, 'backend/students/');
         }
 
 
@@ -634,7 +670,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
     public function card(Request $r, $datavalue, $id,$school_id)
     {
         ini_set('max_execution_time', '60000');
-        ini_set("pcre.backtrack_limit", "5000000000000000050000000000000000");
+        ini_set("pcre.backtrack_limit", "50000000000000000");
         ini_set('memory_limit', '12008M');
         if ($datavalue == 'class') {
             if ($id == 'All') {
@@ -926,7 +962,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
     public function attendence_sheet_result_pdf(Request $r, $school_id, $student_class, $view, $date)
     {
         ini_set('max_execution_time', '60000');
-        ini_set("pcre.backtrack_limit", "5000000000000000050000000000000000");
+        ini_set("pcre.backtrack_limit", "50000000000000000");
         ini_set('memory_limit', '12008M');
         $data['data'] = $view;
         $data['class'] = $student_class;
@@ -1019,17 +1055,57 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
     }
 
 
-
-
-    public function applicant_invoice(Request $request, $trxid)
+    public function student_list_stipend_pdf(Request $r,$year,$class,$school_id)
     {
-        $transId = $trxid;
-        if($request->d=='admin'){
-            $payment = payment::where(['id'=>$transId,'status'=>'Paid'])->first();
-        }else{
-        $payment = payment::where(['trxid'=>$transId,'status'=>'Paid'])->first();
+        $school_id = sitedetails()->school_id;
+
+
+
+        $wd = [
+            'school_id'=>$school_id,
+            'StudentClass' => $class,
+            'Year' => $year,
+            'StudentStatus' => 'Active',
+            'stipend' => 'Yes',
+        ];
+        if($r->group){
+            $wd['StudentGroup'] = $r->group;
         }
 
+        $data['count'] = DB::table('students')->where($wd)->count();
+        if ($data['count'] > 0) {
+            $data['rows'] = DB::table('students')->where($wd)->orderBy('StudentRoll','ASC')->get();
+        }
+        $data['pdf']='pdf';
+        // frontend/schoolLogo.png
+        //in Controller
+        // $pathgovlogo = 'frontend/schoolLogo.png';
+        // $typegovlogo = pathinfo($pathgovlogo, PATHINFO_EXTENSION);
+        // $dataigovlogo = file_get_contents($pathgovlogo);
+        // $govlogo = 'data:image/' . $typegovlogo . ';base64,' . base64_encode($dataigovlogo);
+        // $data['logo'] = $govlogo;
+        $fileName = 'students-'.date('Y-m-d H:m:s');
+        $data['fileName'] = $fileName;
+        $types = 'school';
+        if($r->types){
+            $types = $r->types;
+        }
+
+        $data['types'] = $types;
+        // return $data;
+        $pdf = LaravelMpdf::loadView('admin/pdfReports.total_student', $data);
+        return $pdf->stream("$fileName.pdf");
+        // return view('', $data);
+    }
+
+
+
+
+    public function applicant_invoice($trxid)
+    {
+
+        $transId = $trxid;
+        $payment = payment::where(['trxid'=>$transId,'status'=>'Paid'])->first();
 
         $AdmissionID = $payment->admissionId;
 
@@ -1219,7 +1295,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
             <p class='defalttext'>$address</p>
-            <p class='defalttext' style='font-size:12px'>Website: www.kmghhs.edu.bd</p>
+            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>
             ";
 
             if($status=='Paid'){
@@ -1365,8 +1441,18 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 $registration_fee = 0;
                                 $registration_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->count();
                                 if($registration_feeCount>0){
-                                    $registration_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->first();
+
+                                    $registration_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee','ex_name'=>''])->first();
                                    $registration_fee  = $registration_feeTd->amount;
+                                }
+
+
+                                $registration_other_fee = 0;
+                                $registration_other_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->count();
+                                if($registration_other_feeCount>0){
+
+                                    $registration_other_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee','ex_name'=>'other_fee'])->first();
+                                   $registration_other_fee  = $registration_other_feeTd->amount;
                                 }
 
 
@@ -1461,6 +1547,13 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 </tr>
 
 
+                                <tr class='tr items'>
+                                <td class='td  defaltfont'>".int_en_to_bn(5)."</td>
+                                <td class='td  defaltfont'>রেজিস্ট্রেশন ফি (বিবিধ ফি)</td>
+                                <td class='td  defaltfont'>".int_en_to_bn($registration_other_fee)."</td>
+                                </tr>
+
+
 
 
                                 <tr class='tr items'>
@@ -1498,7 +1591,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 </tr>
 
                                 ";
-                                $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
+                                $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$registration_other_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
 
 
                             }else{
@@ -1585,7 +1678,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
             <p style='text-align:right;font-size:16px'>শিক্ষার্থীর কপি</p>
             <h2 style='font-weight: 500;' class='companiname'>$full_name</h2>
             <p class='defalttext'>$address</p>
-            <p class='defalttext' style='font-size:12px'>Website: www.kmghhs.edu.bd</p>";
+            <p class='defalttext' style='font-size:12px'>Website: www.tepriganjhighschool.edu.bd</p>";
 
             if($status=='Paid'){
                 $html .="            <h2 class='companiname' style='width: 160px;
@@ -1687,7 +1780,10 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                                 'monthly_fee'=>'মাসিক বেতন',
                                 'exam_fee'=>'পরীক্ষার ফি',
                                 'registration_fee'=>'রেজিস্ট্রেশন ফি',
-                                'form_filup_fee'=>'ফরম পূরণ ফি',
+                                'board_fee'=>'বোর্ড ফি',
+                                'center_fee'=>'কেন্দ্র ফি',
+                                'late_fees'=>'বিলম্ব ফি',
+                                'Pension_and_Welfare_Trust'=>'অবসর ও কল্যাণ ট্রাস্ট',
                          ];
 
                          $kahts = json_decode(json_encode($khat));
@@ -1698,143 +1794,208 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
                          if($paymentCount>1){
 
 
-                            $sessionFee = 0;
-                            $paymentSessionCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'session_fee'])->count();
-                            if($paymentSessionCount>0){
-                                $paymentSession = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'session_fee'])->first();
-                               $sessionFee  = $paymentSession->amount;
-                            }
-
-                            $exam_fee = 0;
-                            $ex_name = '';
-                            $exam_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'exam_fee'])->count();
-                            if($exam_feeCount>0){
-                                $exam_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'exam_fee'])->first();
-                               $exam_fee  = $exam_feeTd->amount;
-                               $ex_name  = $exam_feeTd->ex_name;
-                            }
-                            $registration_fee = 0;
-                            $registration_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->count();
-                            if($registration_feeCount>0){
-                                $registration_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->first();
-                               $registration_fee  = $registration_feeTd->amount;
-                            }
-
-                            $form_filup_fee = 0;
-                            $form_filup_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee'])->count();
-                            if($form_filup_feeCount>0){
-                                $form_filup_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee'])->first();
-                               $form_filup_fee  = $form_filup_feeTd->amount;
-                            }
-
-
-
-                             $paymentss = payment::where(['trxid'=>$invoiceId,'status'=>'Paid'])->get();
-
-                             $monthname = "";
-                             $monthlyAmount = 0;
-                             foreach ($paymentss as $paymentSingle) {
-                                if($paymentSingle->type=='monthly_fee'){
-                                    // array_push($monthname,month_en_to_bn($paymentSingle->month));
-                                    $monthname .= month_en_to_bn($paymentSingle->month).",";
-                                    $monthlyAmount += $paymentSingle->amount;
-                                }
+                             $sessionFee = 0;
+                             $paymentSessionCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'session_fee'])->count();
+                             if($paymentSessionCount>0){
+                                 $paymentSession = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'session_fee'])->first();
+                                $sessionFee  = $paymentSession->amount;
                              }
 
-                            $html .="
-
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(1)."</td>
-                            <td class='td  defaltfont'>ভর্তি ফরম ফি</td>
-                            <td class='td  defaltfont'>".int_en_to_bn(0)."</td>
-                            </tr>
-
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(2)."</td>
-                            <td class='td  defaltfont'>ভর্তি/সেশন ফি</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($sessionFee)."</td>
-                            </tr>
-
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(3)."</td>
-                            <td class='td  defaltfont'>মাসিক বেতন  ($monthname)</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($monthlyAmount)."</td>
-                            </tr>
+                             $pension_and_Welfare_TrustFee = 0;
+                             $paymentPension_and_Welfare_TrustCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'pension_and_Welfare_Trust'])->count();
+                             if($paymentPension_and_Welfare_TrustCount>0){
+                                 $paymentPension_and_Welfare_Trust = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'pension_and_Welfare_Trust'])->first();
+                                $pension_and_Welfare_TrustFee  = $paymentPension_and_Welfare_Trust->amount;
+                             }
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(4)."</td>
-                            <td class='td  defaltfont'>পরীক্ষার ফি (".ex_name($ex_name).")</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($exam_fee)."</td>
-                            </tr>
+                             $exam_fee = 0;
+                             $ex_name = '';
+                             $exam_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'exam_fee'])->count();
+                             if($exam_feeCount>0){
+                                 $exam_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'exam_fee'])->first();
+                                $exam_fee  = $exam_feeTd->amount;
+                                $ex_name  = $exam_feeTd->ex_name;
+                             }
+
+                             $registration_fee = 0;
+                             $registration_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->count();
+                             if($registration_feeCount>0){
+
+                                 $registration_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee','ex_name'=>''])->first();
+                                $registration_fee  = $registration_feeTd->amount;
+                             }
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(5)."</td>
-                            <td class='td  defaltfont'>রেজিস্ট্রেশন ফি</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($registration_fee)."</td>
-                            </tr>
+                             $registration_other_fee = 0;
+                             $registration_other_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee'])->count();
+                             if($registration_other_feeCount>0){
+
+                                 $registration_other_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'registration_fee','ex_name'=>'other_fee'])->first();
+                                $registration_other_fee  = $registration_other_feeTd->amount;
+                             }
 
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(6)."</td>
-                            <td class='td  defaltfont'>ফরম পূরণ (বোর্ড ফি)</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($board_fee)."</td>
-                            </tr>
+
+                             $form_filup_fee = 0;
+                             $form_filup_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee'])->count();
+                             if($form_filup_feeCount>0){
+                                 $form_filup_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee'])->first();
+                                $form_filup_fee  = $form_filup_feeTd->amount;
+                             }
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(7)."</td>
-                            <td class='td  defaltfont'>ফরম পূরণ (কেন্দ্র ফি)</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($center_fee)."</td>
-                            </tr>
+//////////////////////////////////////
+
+                             $board_fee = 0;
+                             $board_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'board_fee'])->count();
+                             if($board_feeCount>0){
+                                 $board_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'board_fee'])->first();
+                                $board_fee  = $board_feeTd->amount;
+                             }
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(8)."</td>
-                            <td class='td  defaltfont'>ফরম পূরণ (বিলম্ব ফি)</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($late_fees)."</td>
-                            </tr>
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(9)."</td>
-                            <td class='td  defaltfont'>ফরম পূরণ (বিবিধ ফি)</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($Fother_fee)."</td>
-                            </tr>
+                             $center_fee = 0;
+                             $center_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'center_fee'])->count();
+                             if($center_feeCount>0){
+                                 $center_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'center_fee'])->first();
+                                $center_fee  = $center_feeTd->amount;
+                             }
 
 
-                            <tr class='tr items'>
-                            <td class='td  defaltfont'>".int_en_to_bn(10)."</td>
-                            <td class='td  defaltfont'>অবসর ও কল্যাণ ট্রাস্ট</td>
-                            <td class='td  defaltfont'>".int_en_to_bn($pension_and_Welfare_TrustFee)."</td>
-                            </tr>
+                             $late_fees = 0;
+                             $late_feesCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'late_fees'])->count();
+                             if($late_feesCount>0){
+                                 $late_feesTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'late_fees'])->first();
+                                $late_fees  = $late_feesTd->amount;
+                             }
 
-                            ";
-                            $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
+                             $Fother_fee = 0;
+                             $other_feeCount = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'other_fee'])->count();
+                             if($other_feeCount>0){
+                                 $other_feeTd = payment::where(['trxid'=>$invoiceId,'status'=>'Paid','type'=>'form_filup_fee','ex_name'=>'other_fee'])->first();
+                                $Fother_fee  = $other_feeTd->amount;
+                             }
 
-                        }else{
-                            $index = 1;
-                            foreach ($khat as $key=>$value) {
-                                if($value=='মাসিক বেতন'){
-                                    $html .="  <tr class='tr items'>
-                                    <td class='td  defaltfont'>".int_en_to_bn($index)."</td>
-                                    <td class='td  defaltfont'>$value</td>";
-                                }else{
-                                    $html .="  <tr class='tr items'>
-                                    <td class='td  defaltfont'>".int_en_to_bn($index)."</td>
-                                    <td class='td  defaltfont'>$value</td>";
-                                }
-                                if($key==$payment->type){
-                                    $html .=" <td class='td  defaltfont'>".int_en_to_bn($amount)."</td>";
-                                }else{
-                                    $html .=" <td class='td  defaltfont'>".int_en_to_bn(0)."</td>";
-                                };
-                                $html.="  </tr>";
-                                $index++;
-                            }
-                            $totalAmount = $amount;
-                        }
 
+
+////////////////////////////////////////
+
+                              $paymentss = payment::where(['trxid'=>$invoiceId,'status'=>'Paid'])->get();
+
+                              $monthname = "";
+                              $monthlyAmount = 0;
+                              foreach ($paymentss as $paymentSingle) {
+                                 if($paymentSingle->type=='monthly_fee'){
+                                     // array_push($monthname,month_en_to_bn($paymentSingle->month));
+                                     $monthname .= month_en_to_bn($paymentSingle->month).",";
+                                     $monthlyAmount += $paymentSingle->amount;
+                                 }
+                              }
+
+                             $html .="
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(1)."</td>
+                             <td class='td  defaltfont'>ভর্তি ফরম ফি</td>
+                             <td class='td  defaltfont'>".int_en_to_bn(0)."</td>
+                             </tr>
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(2)."</td>
+                             <td class='td  defaltfont'>ভর্তি/সেশন ফি</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($sessionFee)."</td>
+                             </tr>
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(3)."</td>
+                             <td class='td  defaltfont'>মাসিক বেতন  ($monthname)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($monthlyAmount)."</td>
+                             </tr>
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(4)."</td>
+                             <td class='td  defaltfont'>পরীক্ষার ফি (".ex_name($ex_name).")</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($exam_fee)."</td>
+                             </tr>
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(5)."</td>
+                             <td class='td  defaltfont'>রেজিস্ট্রেশন ফি</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($registration_fee)."</td>
+                             </tr>
+
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(5)."</td>
+                             <td class='td  defaltfont'>রেজিস্ট্রেশন ফি (বিবিধ ফি)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($registration_other_fee)."</td>
+                             </tr>
+
+
+
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(6)."</td>
+                             <td class='td  defaltfont'>ফরম পূরণ (বোর্ড ফি)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($board_fee)."</td>
+                             </tr>
+
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(7)."</td>
+                             <td class='td  defaltfont'>ফরম পূরণ (কেন্দ্র ফি)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($center_fee)."</td>
+                             </tr>
+
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(8)."</td>
+                             <td class='td  defaltfont'>ফরম পূরণ (বিলম্ব ফি)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($late_fees)."</td>
+                             </tr>
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(9)."</td>
+                             <td class='td  defaltfont'>ফরম পূরণ (বিবিধ ফি)</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($Fother_fee)."</td>
+                             </tr>
+
+
+
+                             <tr class='tr items'>
+                             <td class='td  defaltfont'>".int_en_to_bn(10)."</td>
+                             <td class='td  defaltfont'>অবসর ও কল্যাণ ট্রাস্ট</td>
+                             <td class='td  defaltfont'>".int_en_to_bn($pension_and_Welfare_TrustFee)."</td>
+                             </tr>
+
+                             ";
+                             $totalAmount = $sessionFee+$monthlyAmount+$exam_fee+$registration_fee+$registration_other_fee+$board_fee+$center_fee+$late_fees+$Fother_fee+$pension_and_Welfare_TrustFee;
+
+
+                         }else{
+                             $index = 1;
+                             foreach ($khat as $key=>$value) {
+                                 if($value=='মাসিক বেতন'){
+                                     $html .="  <tr class='tr items'>
+                                     <td class='td  defaltfont'>".int_en_to_bn($index)."</td>
+                                     <td class='td  defaltfont'>$value</td>";
+                                 }else{
+                                     $html .="  <tr class='tr items'>
+                                     <td class='td  defaltfont'>".int_en_to_bn($index)."</td>
+                                     <td class='td  defaltfont'>$value</td>";
+                                 }
+                                 if($key==$payment->type){
+                                     $html .=" <td class='td  defaltfont'>".int_en_to_bn($amount)."</td>";
+                                 }else{
+                                     $html .=" <td class='td  defaltfont'>".int_en_to_bn(0)."</td>";
+                                 };
+                                 $html.="  </tr>";
+                                 $index++;
+                             }
+                             $totalAmount = $amount;
+                         }
 
 
 
@@ -1899,6 +2060,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
         return $html;
     }
+
 
 
     public function exam_admit($admissionId,$ex_name)
@@ -2023,7 +2185,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
     <td>
         <p class='fontsize2'>$school_details->SCHOLL_NAME</p>
         <p class='fontsize1'>$school_details->SCHOLL_ADDRESS </p>
-
+        <p class='fontsize1' style='font-size:12px'>website: www.tepriganjhighschool.edu.bd </p>
     </td>
     <td style='text-align: right'>
     <div class='imgdiv'>
@@ -2041,7 +2203,7 @@ public function usercreate($school_id,$name,$email,$password,$id,$class,$type)
 
     <div class='examNameHead' style='margin-top:20px'>
         <p class='examNamePara'>প্রবেশ পত্র</p>
-        <p style='margin:0px !important;margin-top:10px;font-size:18px'>".ex_name($ex_name)."- ২০২৩</p>
+        <p style='margin:0px !important;margin-top:10px;font-size:18px'>".ex_name($ex_name)."- ২০২৫</p>
     </div>
 
 
@@ -2199,7 +2361,7 @@ return $html;
                     <td>
                         <p class='fontsize2'>$schoolDetails->SCHOLL_NAME</p>
                         <p class='fontsize1'>$schoolDetails->SCHOLL_ADDRESS </p>
-
+                        <p class='fontsize1' style='font-size:12px'>website: www.tepriganjhighschool.edu.bd </p>
                     </td>
                     <td style='text-align: right'>
                     <div class='imgdiv'>
@@ -2388,7 +2550,7 @@ return $html;
 
         function Mullayon(Request $request, $class,$bisoy) {
             ini_set('max_execution_time', '60000');
-            ini_set("pcre.backtrack_limit", "5000000000000000050000000000000000");
+            ini_set("pcre.backtrack_limit", "50000000000000000");
             ini_set('memory_limit', '12008M');
 
             if($request->StudentReligion){
@@ -2422,7 +2584,8 @@ return $html;
             $student_class = $request->student_class;
             $StudentGroup = $request->StudentGroup;
             $StudentRoll = $request->StudentRoll;
-            $year = $request->year;
+            // $year = $request->year;
+            $year = "2024";
 
              $filter = [
                 'StudentClass'=>$student_class,
@@ -2474,6 +2637,32 @@ return $html;
 
 
 
+
+
+
+        function formfillupstudents() {
+
+          return  $studentsWithPaidFormFillupFee = Student::whereHas('paymentform', function ($query) {
+                $query->where('type', 'form_filup_fee')->where('status', 'Paid');
+            })->orderBy('StudentRoll','asc')->get();
+        }
+
+
+        function formfillupstudentsPdf() {
+
+            $students = Student::whereHas('paymentform', function ($query) {
+                $query->where('type', 'form_filup_fee')->where('status', 'Paid');
+            })->orderBy('StudentRoll','asc')->get();
+
+
+
+
+            $fileName = "Form-fillup-report" ;
+            $pdf = LaravelMpdf::loadView('admin/pdfReports.form_fillup_report', compact('students'));
+            return $pdf->stream("$fileName.pdf");
+
+
+        }
 
 
 

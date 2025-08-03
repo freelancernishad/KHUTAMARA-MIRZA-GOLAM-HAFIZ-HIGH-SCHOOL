@@ -136,6 +136,11 @@
                 <a v-if="searchtype == 'filterclass'"
                     class="btn-fill-lg font-normal text-light gradient-pastel-green float-right" target="_blank"
                     :href="'/dashboard/student_list/pdf/' + year + '/' + student_class + '/' + school_id" >Download Student List</a>
+                
+                <a v-if="searchtype == 'filterclass'" style="margin-right: 11px;"
+                    class="btn-fill-lg font-normal text-light gradient-pastel-green float-right" target="_blank"
+                    :href="'/dashboard/student_list_stipend/pdf/' + year + '/' + student_class + '/' + school_id" >উপবৃত্তি তালিকা </a>
+
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -156,7 +161,12 @@
                                     <th class="tablecolhide">পিতার নাম</th>
                                     <th class="tablecolhide">মাতার নাম</th>
 
-                                  <th class="tablecolhide">উপবৃত্তি</th>
+
+
+                                  <th class="tablecolhide" v-if="$route.params.status=='Pending'">স্কুল</th>
+                                  <th class="tablecolhide" v-else>উপবৃত্তি</th>
+
+
                                   <th class="tablecolhide" v-if="$route.params.status=='Pending'">আবেদনের তারিখ</th>
                                     <!-- <th class="tablecolhide" @click="sortby('StudentPhoneNumber')">ফোন</th>  -->
                                     <th>Action</th>
@@ -200,7 +210,8 @@
                                     <td class="tablecolhide">{{ student.StudentClass }}</td>
                                     <td class="tablecolhide" style="text-transform: uppercase;">{{ student.StudentFatherNameBn }}</td>
                                     <td class="tablecolhide" style="text-transform: uppercase;">{{ student.StudentMotherNameBn }}</td>
-                                    <td class="tablecolhide">{{ student.stipend }}</td>
+                                    <td class="tablecolhide"  v-if="$route.params.status=='Pending'">{{ student.preSchool }}</td>
+                                    <td class="tablecolhide" v-else>{{ student.stipend }}</td>
                                     <td class="tablecolhide" v-if="$route.params.status=='Pending'">{{ dateformatGlobal(student.JoiningDate)[3] }}</td>
                                     <!-- <td class="tablecolhide">{{ student.StudentPhoneNumber }}</td> -->
                                     <td>
@@ -268,7 +279,7 @@
             <td style='border:0 !important;padding-left: 15px;'>
                 <p class='fontsize2' style='font-size:30px;    margin-bottom: -10px;'> {{ schoolSettings.SCHOLL_NAME }} </p>
                 <p class='fontsize1' style='font-size:20px;margin-bottom: 2px;'> {{ schoolSettings.SCHOLL_ADDRESS }}  </p>
-
+                <p class='fontsize1' style='font-size:12px;margin-bottom: 2px;'>website: www.tepriganjhighschool.edu.bd </p>
             </td>
             <td style='border:0 !important'>
                 <label for="fileupload" id="fileChoiceLable">

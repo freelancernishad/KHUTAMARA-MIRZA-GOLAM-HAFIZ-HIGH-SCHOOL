@@ -25,7 +25,7 @@
             </div>
             <div>
                 <h2 class="fw-bold text-left text-dark name" style="font-size: 25px;    border-bottom: 1px solid #271054;">{{ schoolSettings.SCHOLL_NAME }}</h2>
-                <p class="text-left fw-bold f13" style="color: var(--my-blue-color);font-size: 16px;">TEPRIGANJ ADARSHA BL HIGH SCHOOL</p>
+                <p class="text-left fw-bold f13" style="color: var(--my-blue-color);font-size: 16px;">KHUTAMARA MIRZA GOLAM HAFIZ HIGH SCHOOL</p>
             </div>
             <div class="contact-info">
                 <!-- <p class="fw-bold mb-0 text-danger">মোবাইলঃ০১৭১৯৪২১৬০৯</p>
@@ -187,9 +187,9 @@
 
                 <div class="col-md-6 col-lg-4">
                     <p class="fs-5 mb-0  mt-2">পরিকল্পনা ও বাস্তবায়নে: </p>
-                    <p class="mb-0  mt-1">মোঃ আবু ফরহাদ <br>
-                        সহকারী শিক্ষক <br>
-                        {{ schoolSettings.SCHOLL_NAME }}</p>
+                    <p class="mb-0  mt-1">পরিমল চন্দ্র রায় <br>
+                        01792948280 <br>
+                        </p>
                 </div>
 
 
